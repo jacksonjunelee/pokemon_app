@@ -69,7 +69,7 @@ function setMarkers(map, locations) {
       zIndex: location[3]
     });
 
-    google.maps.event.addListener(marker,'click',loadGameDiv);
+    google.maps.event.addListener(marker,'click',gameStart);
   }
 }
 

@@ -13,32 +13,54 @@ erjgijrgi
 // $('body').appendTo(map);
 // }
 
+var gameStart= function(){
+  game.start(callback);
 
-var loadGameDiv = function() {
-  console.log("moo");
-  console.log(this);
-  console.log(this.pokemon);
+  function callback(game) {
+    console.log("wrwefwrg");
+    loadGameDiv(game);
+  }
+
+  deleteLocation = locations.splice(this.index,1);
   console.log(locations);
-  locations = locations.splice(this.index,1);
-  console.log(locations);
-      // indexes = $.map(list, function(obj, index) {
-      //   if(obj.prop2 == "yutu") {
-      //     return index;
-      //   }
-      // })
-      //
-      // firstIndex = indexes[0]
+  // indexes = $.map(list, function(obj, index) {
+  //   if(obj.prop2 == "yutu") {
+  //     return index;
+  //   }
+  // })
+  //
+  // firstIndex = indexes[0]
   this.setMap(null);
-  var gameDiv = $('<div>').attr('id','game_console').css({"width":"400px","height":"500px","background-color":"red"});
-  var optionDiv = $('<div>').attr('id','options').css({"width":"200px","height":"250px",});
-  var attackButton = $('<button>').attr('id', 'attack').text('Attack')
-  var switchButton = $('<button>').attr('id', 'switch').text('PKMN')
-  var itemButton = $('<button>').attr('id', 'item').text('Items')
-  var fleeButton = $('<button>').attr('id', 'attack').text('Attack')
+  }
 
+
+var loadGameDiv = function(mufasa) {
+  console.log(mufasa.stage[0]);
+  debugger;
+  // var firstPokemon = game.stage[0].pokemons[0];
+
+  var gameDiv = $('<div>').attr('id','game_console').css({"width":"400px","height":"500px","background-color":"red"});
+  // options
+  var optionDiv = $('<div>').attr('id','options').css({"width":"90%","height":"20%",});
+  var attackButton = $('<button>').addClass('option').attr('id', 'attack').text('Attack')
+  var switchButton = $('<button>').addClass('option').attr('id', 'switch').text('PKMN')
+  var itemButton = $('<button>').addClass('option').attr('id', 'item').text('Items')
+  var fleeButton = $('<button>').addClass('option').attr('id', 'flee').text('Flee')
+
+  //image
+
+  $.get('/pokemons/' + firstPokemon.api_ref + '/sprite/fetch').done(function(data){
+    myPokemonImageTag.attr('src','http://pokeapi.co/' + data.image)
+  });
+
+  var myPokemonImageTag = $('<img>').addClass('me').attr('id','me');
+  var pokemonImageTag = $('<img>').addClass('pokeOpponent').attr('id','pokeOpponent');
 
   optionDiv.append(attackButton).append(switchButton).append(itemButton).append(fleeButton);
+  myPokemonImageTag.appendTo(gameDiv);
   optionDiv.appendTo(gameDiv);
-  (gameDiv).appendTo('body')
+
+  gameDiv.appendTo('body')
+
 }
 </script>

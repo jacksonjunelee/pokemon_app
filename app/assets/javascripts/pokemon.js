@@ -1,4 +1,4 @@
-function Pokemon(id){
+ function Pokemon(id){
   this.id = id;
   this.name;
   this.nickname;

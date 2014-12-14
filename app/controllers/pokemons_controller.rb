@@ -5,7 +5,6 @@ class PokemonsController < ApplicationController
 
   def show
     @pokemons = HTTParty.get('http://www.pokeapi.co/api/v1/pokemon/' + params[:id])
-    binding.pry
     render json: @pokemons
   end
 
