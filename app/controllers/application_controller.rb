@@ -7,5 +7,4 @@ class ApplicationController < ActionController::Base
     render :home
     # render layout: 'application', text: ''
   end
-
 end
