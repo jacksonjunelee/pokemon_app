@@ -1,3 +1,44 @@
 erjgijrgi
 
-<div id="map-canvas" style="width:500px;height:380px;"></div>
+<div id="map-canvas" style="width: 400px;height: 500px;"></div>
+
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+
+<input type="filepicker" data-fp-apikey="<%= ENV["FILEPICKER_POKEMON"] %>" data-fp-mimetypes="*/*" data-fp-container="modal" onchange="alert(event.fpfile.url)">
+
+<script>
+// $(function(){
+//
+// var map = $('<div>').attr('id','map-canvas').css({"width":"900px","height":"900px"});
+// $('body').appendTo(map);
+// }
+
+
+var loadGameDiv = function() {
+  console.log("moo");
+  console.log(this);
+  console.log(this.pokemon);
+  console.log(locations);
+  locations = locations.splice(this.index,1);
+  console.log(locations);
+      // indexes = $.map(list, function(obj, index) {
+      //   if(obj.prop2 == "yutu") {
+      //     return index;
+      //   }
+      // })
+      //
+      // firstIndex = indexes[0]
+  this.setMap(null);
+  var gameDiv = $('<div>').attr('id','game_console').css({"width":"400px","height":"500px","background-color":"red"});
+  var optionDiv = $('<div>').attr('id','options').css({"width":"200px","height":"250px",});
+  var attackButton = $('<button>').attr('id', 'attack').text('Attack')
+  var switchButton = $('<button>').attr('id', 'switch').text('PKMN')
+  var itemButton = $('<button>').attr('id', 'item').text('Items')
+  var fleeButton = $('<button>').attr('id', 'attack').text('Attack')
+
+
+  optionDiv.append(attackButton).append(switchButton).append(itemButton).append(fleeButton);
+  optionDiv.appendTo(gameDiv);
+  (gameDiv).appendTo('body')
+}
+</script>

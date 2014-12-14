@@ -5,3 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Trainer.create(
+username: "MCK"
+)
+
+Pokemon.create(
+name: "bulbasaur",
+nickname: "SAUR",
+api_ref: 1,
+trainer_id: 1
+)

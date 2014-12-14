@@ -1,13 +1,17 @@
 Rails.application.routes.draw do
   resources :trainers
 
-  resources :pokemons
+  resources :pokemons do
+    member do
+      get ':type/fetch' => 'pokemons#fetch', as: :fetch
+    end
+  end
 
   get 'sessions/new' => 'sessions#new', as: 'login'
   post 'sessions'    => 'sessions#create'
   delete 'sessions'  => 'sessions#destroy'
 
-  root 'application#home'
+  root 'application#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
