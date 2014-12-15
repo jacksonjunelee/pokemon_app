@@ -8,6 +8,6 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 
 Rails.application.config.assets.precompile += %w( googlemap.js )
-Rails.application.config.assets.precompile += %w( pokemon.js )
+Rails.application.config.assets.precompile += %w( pokemon.js.erb )
 Rails.application.config.assets.precompile += %w( trainer.js )
 Rails.application.config.assets.precompile += %w( game.js )

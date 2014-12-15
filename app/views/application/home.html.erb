@@ -17,7 +17,7 @@ $(function(){
 
 var gameStart= function(){
   loadGameDiv();
-  game.start();
+  game.start(this.pokemon);
   setImages(game);
   deleteLocation = locations.splice(this.index,1);
   console.log(locations);

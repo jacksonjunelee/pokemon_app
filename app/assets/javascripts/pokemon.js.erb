@@ -7,15 +7,17 @@ function Pokemon(id, jquery){
   this.moves = [];
   var pokemon = this;
    $.get('/pokemons/' + id + '/pokemon/fetch').done(function(data){
-      pokemon.hp = data.hp;
-      pokemon.name = data.name;
+     console.log(data);
+      pokemon.hp = data[0].hp;
+      pokemon.name = data[0].name;
       $('#pokeName').text(pokemon.name);
     for (var i =0; i < 4; i++){
-      var random = data.moves[Math.floor(Math.random()*data.moves.length)];
+      var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
       pokemon.moves.push(random);
     }
+    // $('#pokeImg').attr('src','<%= image_path "pokemon-main-sprites/yellow/"%>' + id + '<%= ".png" %>')
+    $('#pokeImg').attr('src', data[1])
     });
-  $('#')
 }
 Pokemon.prototype.attack = function(move){
   // var uri_move = move.resource_uri;
