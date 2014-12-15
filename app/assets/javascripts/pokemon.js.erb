@@ -1,11 +1,8 @@
-require_tree ../images/pokemon-main-sprites/yellow;
-
- function Pokemon(id, jquery){
+function Pokemon(id, jquery){
   this.id = id;
   this.name;
   this.nickname;
   this.hp;
-  this.img;
   this.faint = false;
   this.moves = [];
   var pokemon = this;
@@ -18,6 +15,7 @@ require_tree ../images/pokemon-main-sprites/yellow;
       pokemon.moves.push(random);
     }
     });
+  $('#')
 }
 Pokemon.prototype.attack = function(move){
   // var uri_move = move.resource_uri;
