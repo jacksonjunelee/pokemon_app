@@ -1,9 +1,7 @@
 var game = {
   stage: [],
-  start: function(callback){
-          this.stage = Stage.makeStageRandomMoves();
-          console.log(this)
-          callback(this);
+  start: function(randomPokemon){
+          this.stage = Stage.makeStageRandomMoves(randomPokemon);
         },
   play: function(){
           console.log("Random " + this.stage[1].name + " appears");

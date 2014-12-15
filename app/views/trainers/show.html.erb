@@ -1,0 +1,27 @@
+wefuwefwefewf
+<script>
+
+// will be current session user
+var id = 1;
+
+$.get('/trainers/' + id +'.json').done(function(data){
+  for (var i =0; i < 151; i++){
+    for (var j=0; j < data.pokemons.length; j++){
+      if (data.pokemons[j].api_ref == i) {
+        var dexTag = $('<p>').attr("id",[i]).text(i + '| ' + data.pokemons[j].name);
+        dexTag.appendTo('body');
+      }
+
+
+      else {
+        var dexTag = $('<p>').attr("id",[i]).text(i + '| '  + '------------');
+        dexTag.appendTo('body');
+      }
+    }
+  }
+});
+
+</script>
+
+
+<!-- []  [][]-->

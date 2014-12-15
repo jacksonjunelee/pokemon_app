@@ -1,7 +1,7 @@
 var Stage = {
-  makeStageRandomMoves: function(){
+  makeStageRandomMoves: function(randomPokemon){
     //need to change locations to this in the loadGameDiv
-    console.log(locations[0][4]);
+    console.log(randomPokemon);
     var stage = [];
 
     var me = new Me(1);
@@ -9,7 +9,7 @@ var Stage = {
     // me.pokemons.forEach(function(element){
     //   mypokemons.push(element);
     // });
-    var pokemon = new Pokemon(locations[0][4]);
+    var pokemon = new Pokemon(randomPokemon);
 
     stage.push(me);
     // stage.push(mypokemons);
