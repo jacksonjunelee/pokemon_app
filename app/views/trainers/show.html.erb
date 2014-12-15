@@ -12,6 +12,7 @@ $.get('/trainers/' + id +'.json').done(function(data){
         dexTag.appendTo('body');
       }
 
+
       else {
         var dexTag = $('<p>').attr("id",[i]).text(i + '| '  + '------------');
         dexTag.appendTo('body');

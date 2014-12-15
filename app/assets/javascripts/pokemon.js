@@ -1,14 +1,18 @@
- function Pokemon(id){
+require_tree ../images/pokemon-main-sprites/yellow;
+
+ function Pokemon(id, jquery){
   this.id = id;
   this.name;
   this.nickname;
   this.hp;
+  this.img;
   this.faint = false;
   this.moves = [];
   var pokemon = this;
-  var api_pokemon = $.get('/pokemons/' + id + '/pokemon/fetch').done(function(data){
+   $.get('/pokemons/' + id + '/pokemon/fetch').done(function(data){
       pokemon.hp = data.hp;
       pokemon.name = data.name;
+      $('#pokeName').text(pokemon.name);
     for (var i =0; i < 4; i++){
       var random = data.moves[Math.floor(Math.random()*data.moves.length)];
       pokemon.moves.push(random);

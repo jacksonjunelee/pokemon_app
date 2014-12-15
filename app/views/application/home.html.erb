@@ -16,12 +16,9 @@ $(function(){
 });
 
 var gameStart= function(){
-  game.start(callback);
-
-  function callback(game) {
-    loadGameDiv(game);
-  }
-
+  loadGameDiv();
+  game.start();
+  setImages(game);
   deleteLocation = locations.splice(this.index,1);
   console.log(locations);
   // indexes = $.map(list, function(obj, index) {
@@ -35,9 +32,7 @@ var gameStart= function(){
   }
 
 
-var loadGameDiv = function(mufasa) {
-  console.log(mufasa.stage[0]);
-  // var firstPokemon = game.stage[0].pokemons[0];
+var loadGameDiv = function() {
 
   var gameDiv = $('<div>').attr('id','gameConsole').css({"width":"400px","height":"500px","background-color":"red"});
   // options
@@ -53,14 +48,22 @@ var loadGameDiv = function(mufasa) {
   //   myPokemonImageTag.attr('src','http://pokeapi.co/' + data.image)
   // });
 
+  var pokemonName= $('<label>').addClass('pokeOpponent').attr('id','pokeName');
+
   var myPokemonImageTag = $('<img>').addClass('me').attr('id','me');
-  var pokemonImageTag = $('<img>').addClass('pokeOpponent').attr('id','pokeOpponent');
+  var pokemonImageTag = $('<img>').addClass('pokeOpponent').attr('id','pokeImg');
 
   optionDiv.append(attackButton).append(switchButton).append(itemButton).append(fleeButton);
-  // myPokemonImageTag.appendTo(gameDiv);
+  myPokemonImageTag.appendTo(gameDiv);
+  pokemonImageTag.appendTo(gameDiv);
+  pokemonName.appendTo(gameDiv);
   optionDiv.appendTo(gameDiv);
 
-  gameDiv.appendTo('body')
+  gameDiv.appendTo('body');
 
+}
+
+var setImages = function(mufasa) {
+  console.log(mufasa);
 }
 </script>

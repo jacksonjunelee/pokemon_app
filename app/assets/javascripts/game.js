@@ -1,8 +1,7 @@
 var game = {
   stage: [],
-  start: function(callback){
+  start: function(){
           this.stage = Stage.makeStageRandomMoves();
-          callback(this);
         },
   play: function(){
           console.log("Random " + this.stage[1].name + " appears");
