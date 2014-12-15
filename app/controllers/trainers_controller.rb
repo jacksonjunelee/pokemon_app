@@ -5,7 +5,10 @@ class TrainersController < ApplicationController
 
   def show
     @trainer=Trainer.find(params[:id])
-    render json: @trainer.to_json(include: :pokemons)
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @trainer.to_json(include: :pokemons) }
+    end
   end
 
   def new

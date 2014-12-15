@@ -1,10 +1,3 @@
-$(function(){
-
-  console.log("moo");
-  console.log("mufasa");
-
-});
-
 var Me = function(id){
   this.id,
   this.username;
