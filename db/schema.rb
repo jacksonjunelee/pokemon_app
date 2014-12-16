@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141215220354) do
+ActiveRecord::Schema.define(version: 20141216025818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20141215220354) do
     t.string   "moves2"
     t.string   "moves3"
     t.text     "battle_img"
+    t.integer  "speed"
   end
 
   add_index "pokemons", ["trainer_id"], name: "index_pokemons_on_trainer_id", using: :btree

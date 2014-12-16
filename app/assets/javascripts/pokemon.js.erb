@@ -8,6 +8,7 @@ function Pokemon(id){
   var pokemon = this;
    $.get('/pokemons/' + id + '/pokemon/fetch').done(function(data){
      console.log(data);
+      pokemon.speed = data[0].speed;
       pokemon.hp = data[0].hp;
       pokemon.name = data[0].name;
       $('#pokeName').text(pokemon.name);
