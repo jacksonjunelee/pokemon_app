@@ -7,7 +7,7 @@
 <script>
 $(function(){
   $('body').on('click','button#attack','');
-  $('body').on('click','button#switch','');
+  $('body').on('click','button#switch',gameSwitch);
   $('body').on('click','button#item','');
   $('body').on('click','button#flee','');
 
@@ -67,6 +67,21 @@ var loadGameDiv = function() {
   optionDiv.appendTo(gameDiv);
 
   gameDiv.appendTo('body');
+
+}
+
+var gameSwitch = function(){
+  var myPokemonArray = game.show();
+
+  var myPokemonB1 = $('<button>').addClass('pokemonB').attr('id', 'myPoke1').text(myPokemonArray[1]);
+  var myPokemonB2 = $('<button>').addClass('pokemonB').attr('id', 'myPoke2').text(myPokemonArray[2]);
+  var myPokemonB3 = $('<button>').addClass('pokemonB').attr('id', 'myPoke3').text(myPokemonArray[3]);
+  var myPokemonB4 = $('<button>').addClass('pokemonB').attr('id', 'myPoke4').text(myPokemonArray[4]);
+  var myPokemonB5 = $('<button>').addClass('pokemonB').attr('id', 'myPoke5').text(myPokemonArray[5]);
+
+  var allMyPokemonDiv = $('<div>').attr('id','myPokemonArray');
+  $('div#options').replaceWith$(allMyPokemonDiv);
+
 
 }
 
