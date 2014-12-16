@@ -11,11 +11,11 @@ function Pokemon(id, jquery){
       pokemon.hp = data[0].hp;
       pokemon.name = data[0].name;
       $('#pokeName').text(pokemon.name);
+      $('#pokeHp').text('Hp:' + pokemon.hp);
     for (var i =0; i < 4; i++){
       var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
       pokemon.moves.push(random);
     }
-    // $('#pokeImg').attr('src','<%= image_path "pokemon-main-sprites/yellow/"%>' + id + '<%= ".png" %>')
     $('#pokeImg').attr('src', data[1])
     });
 }

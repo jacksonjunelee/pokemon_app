@@ -7,7 +7,7 @@ class TrainersController < ApplicationController
     @trainer=Trainer.find(params[:id])
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: @trainer.to_json(include: :pokemons) }
+      format.json { render json: @trainer.to_json(include: :pokemons)}
     end
   end
 
