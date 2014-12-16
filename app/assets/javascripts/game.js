@@ -3,10 +3,21 @@ var game = {
   selectedMove:[],
   stage: [],
   pokemonOut:[],
+  pokemonOutMoves:[],
   start: function(randomPokemon){
           this.stage = Stage.makeStageRandomMoves(randomPokemon);
+        },
+  assign: function(){
           this.pokemonOut = this.stage[0].pokemons[0];
           this.currentAttacker = this.checkFirstMove();
+          for (var i = 0; i < 3; i++){
+            var num = i;
+            var n = num.toString();
+            var move = this.stage[0].pokemons[0].moves.resource_uri;
+            $.get('http://www.pokeapi.co' + move).done(function(data){
+              console.log(data);
+            });
+          }
           this.attackPhase();
         },
   checkFirstMove: function() {
@@ -22,7 +33,7 @@ var game = {
           console.log(this.stage[0].username + ' sends out ' + this.stage[0].pokemons[0].name);
         },
   show:function(){
-    game.stage[0].pokeshow();
+    return game.stage[0].pokeshow();
   },
   switch: function(){
     this.stage[0].pokeshow();
@@ -33,7 +44,6 @@ var game = {
   attackPhase:function(){
     for (var i = 0; i < this.stage[0].pokemons.length; i++){
       if (currentAttacker == this.stage[0].pokemons[i].name){
-
       }
 
       else {

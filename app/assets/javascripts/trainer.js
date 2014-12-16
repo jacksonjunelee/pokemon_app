@@ -2,6 +2,7 @@ var Me = function(id){
   this.id,
   this.username;
   this.pokemons;
+  this.pokemons.moves;
   var me =this;
   $.get('/trainers/' + id +'.json').done(function(data){
           me.username = data.username;
