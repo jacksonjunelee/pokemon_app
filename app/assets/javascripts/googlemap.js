@@ -7,7 +7,6 @@ function initialize() {
   mapOptions);
 
   setMarkers(map, locations);
-
   // function(){
   //   console.log("moo");
   // });

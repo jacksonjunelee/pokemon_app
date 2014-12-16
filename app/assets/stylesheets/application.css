@@ -23,6 +23,10 @@
 
  #options{
    position:relative;
-   top:87%;
-   left:24%;
+   /*top:87%;
+   left:24%;*/
+ }
+
+ #myPokemonOut{
+   margin-top:300px;
  }

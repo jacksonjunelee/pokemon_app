@@ -3,7 +3,6 @@ var Stage = {
     var stage = [];
 
     var me = new Me(1);
-    var mypokemons = [];
     var pokemon = new Pokemon(randomPokemon);
 
     stage.push(me);
