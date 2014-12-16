@@ -5,11 +5,7 @@ var Me = function(id){
   var me =this;
   $.get('/trainers/' + id +'.json').done(function(data){
           me.username = data.username;
-          $('#me').text(me.username);
           me.pokemons = data.pokemons;
-          $('#myPokemonName').text(me.pokemons[0].nickname);
-          $('#myPokemonHp').text('Hp:' + me.pokemons[0].hp);
-          $('#myPokemon').attr('src', me.pokemons[0].battle_img);
 
           // for (var i = 0; i < me.pokemons.length; i++){
           //   var integer = i;

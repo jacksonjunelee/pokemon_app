@@ -6,6 +6,8 @@
 
 <script>
 $(function(){
+  var me = new Me(1);
+  game.stage.push(me);
   $('body').on('click','button#attack','');
   $('body').on('click','button#switch',gameSwitch);
   $('body').on('click','button#item','');
@@ -18,6 +20,9 @@ $(function(){
 var gameStart= function(){
   loadGameDiv();
   game.start(this.pokemon);
+  game.assign();
+  game.checkFirstMove();
+
   deleteLocation = locations.splice(this.index,1);
   console.log(locations);
   // indexes = $.map(list, function(obj, index) {

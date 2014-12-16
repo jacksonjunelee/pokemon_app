@@ -5,11 +5,11 @@ var game = {
   pokemonOut:[],
   pokemonOutMoves:[],
   start: function(randomPokemon){
-          this.stage = Stage.makeStageRandomMoves(randomPokemon);
+          var pokemon = new Pokemon(randomPokemon);
+          this.stage.push(pokemon);
+          this.pokemonOut = this.stage[0].pokemons[0];
   },
   assign: function(){
-          this.pokemonOut = this.stage[0].pokemons[0];
-          this.currentAttacker = this.checkFirstMove();
           var Outmoves = [];
           for (var i = 0; i < 4; i++){
             var move = this.stage[0].pokemons[0].randomMoves[i].resource_uri;
@@ -18,6 +18,11 @@ var game = {
             });
           }
           this.pokemonOutMoves = Outmoves;
+          $('#me').text(this.stage[0].username);
+          $('#myPokemonName').text(this.pokemonOut.nickname);
+          $('#myPokemonHp').text('Hp:' + this.pokemonOut.hp);
+          $('#myPokemon').attr('src', this.pokemonOut.battle_img);
+
   },
   checkFirstMove: function() {
             if (this.pokemonOut.speed >= this.stage[1].speed){
@@ -54,7 +59,7 @@ var game = {
   //     // switch pokemon
   //   }
   //
-  //   if(myPoke.)
+  //   if(myPoke.stage[1].hp == 0)
   // }
   // play: function(){
   //         console.log("Random " + this.stage[1].name + " appears");

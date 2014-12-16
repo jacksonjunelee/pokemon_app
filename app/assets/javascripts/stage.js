@@ -1,13 +1,8 @@
 var Stage = {
   makeStageRandomMoves: function(randomPokemon){
-    var stage = [];
-
-    var me = new Me(1);
     var pokemon = new Pokemon(randomPokemon);
 
-    stage.push(me);
     stage.push(pokemon);
-    return stage;
   }
 
 };
