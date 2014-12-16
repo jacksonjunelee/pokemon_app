@@ -37,30 +37,40 @@ var game = {
 // render
   attackPhase:function(){
       if (this.currentAttacker === this.pokemonOut){
-        this.stage[1].hp -= (this.pokemonOutMoves[0].power/2);
+        this.stage[1].hp -= (this.pokemonOutMoves[0].power/5);
         this.currentAttacker = this.stage[1];
+        this.checkFaint();
+        this.checkSwitch();
       }
 
       else {
         var random = this.stage[1].moves[Math.floor(Math.random()*this.stage[1].moves.length)];
         var myPoke = this;
           $.get('http://www.pokeapi.co' + random.resource_uri).done(function(data){
-            myPoke.pokemonOut.hp -= (data.power/2);
-            myPoke.stage[1].hp -= (myPoke.pokemonOutMoves[0].power/2);
+            myPoke.pokemonOut.hp -= (data.power/5);
             myPoke.currentAttacker = myPoke.pokemonOut;
           });
+            this.checkFaint();
         // var hpCut = pokemonOut.hp -  random;
       }
   },
 
-  // checkFaint: function(){
-  //   if (this.pokemonOut.hp <= 0){
-  //     this.pokemonOut.faint = true;
-  //     // switch pokemon
-  //   }
-  //
-  //   if(myPoke.stage[1].hp == 0)
-  // }
+  checkFaint: function(){
+    if (this.pokemonOut.hp <= 0){
+      this.pokemonOut.faint = true;
+      // switch pokemon
+    }
+
+    if(this.stage[1].hp <= 0){
+      $('#gameConsole').hide();
+    }
+  },
+
+  checkSwitch: function(){
+    if (this.currentAttacker.faint === false){
+      this.stage[0].pokeswitch();
+    }
+  }
   // play: function(){
   //         console.log("Random " + this.stage[1].name + " appears");
   //         console.log(this.stage[0].username + ' sends out ' + this.stage[0].pokemons[0].name);

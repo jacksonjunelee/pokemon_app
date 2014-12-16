@@ -25,9 +25,11 @@ Me.prototype.pokeshow = function(){
 
 Me.prototype.pokeswitch = function(index){
   // this.pokemons[index];
-  var battlePokemon = new Pokemon(index);
-  return battlePokemon;
+  game.pokemonOut = game.stage[0].pokemons[index];
+  game.assign();
+  game.checkFirstMove();
 };
+
 
 Me.prototype.catch = function(){
   console.log(pokemon);
