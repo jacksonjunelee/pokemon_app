@@ -2,7 +2,6 @@ var Me = function(id){
   this.id,
   this.username;
   this.pokemons;
-  this.pokemons.moves;
   var me =this;
   $.get('/trainers/' + id +'.json').done(function(data){
           me.username = data.username;
@@ -15,10 +14,11 @@ var Me = function(id){
           // for (var i = 0; i < me.pokemons.length; i++){
           //   var integer = i;
             $.get('/pokemons/'+ me.pokemons[0].api_ref + '/pokemon/fetch').done(function(data){
-              me.pokemons[0].moves0 = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
-              me.pokemons[0].moves1 = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
-              me.pokemons[0].moves2 = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
-              me.pokemons[0].moves3 = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
+                me.pokemons[0].randomMoves = [];
+              for (var i =0; i < 4; i++){
+                var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
+                me.pokemons[0].randomMoves.push(random);
+              }
             });
       });
 };

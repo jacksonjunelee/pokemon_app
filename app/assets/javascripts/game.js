@@ -1,59 +1,72 @@
 var game = {
-  currentAttacker: '',
+  currentAttacker: [],
   selectedMove:[],
   stage: [],
   pokemonOut:[],
   pokemonOutMoves:[],
   start: function(randomPokemon){
           this.stage = Stage.makeStageRandomMoves(randomPokemon);
-        },
+  },
   assign: function(){
           this.pokemonOut = this.stage[0].pokemons[0];
           this.currentAttacker = this.checkFirstMove();
-          for (var i = 0; i < 3; i++){
-            var num = i;
-            var n = num.toString();
-            var move = this.stage[0].pokemons[0].moves.resource_uri;
+          var Outmoves = [];
+          for (var i = 0; i < 4; i++){
+            var move = this.stage[0].pokemons[0].randomMoves[i].resource_uri;
             $.get('http://www.pokeapi.co' + move).done(function(data){
-              console.log(data);
+              Outmoves.push(data);
             });
           }
-          this.attackPhase();
-        },
+          this.pokemonOutMoves = Outmoves;
+  },
   checkFirstMove: function() {
-            if (this.stage[0].pokemons[0].speed >= this.stage[1].speed){
-              return this.currentAttacker = this.stage[0].pokemons[0].name;
+            if (this.pokemonOut.speed >= this.stage[1].speed){
+              return this.currentAttacker = this.pokemonOut;
                   }
             else {
-              return this.currentAttacker = this.stage[1].name;
+              return this.currentAttacker = this.stage[1];
             }
-        },
-  play: function(){
-          console.log("Random " + this.stage[1].name + " appears");
-          console.log(this.stage[0].username + ' sends out ' + this.stage[0].pokemons[0].name);
-        },
-  show:function(){
-    return game.stage[0].pokeshow();
-  },
-  switch: function(){
-    this.stage[0].pokeshow();
   },
 
 // check faint
 // render
   attackPhase:function(){
-    for (var i = 0; i < this.stage[0].pokemons.length; i++){
-      if (currentAttacker == this.stage[0].pokemons[i].name){
+      if (this.currentAttacker === this.pokemonOut){
+        this.stage[1].hp -= (this.pokemonOutMoves[0].power/2);
+        this.currentAttacker = this.stage[1];
       }
 
       else {
         var random = this.stage[1].moves[Math.floor(Math.random()*this.stage[1].moves.length)];
+        var myPoke = this;
+          $.get('http://www.pokeapi.co' + random.resource_uri).done(function(data){
+            myPoke.pokemonOut.hp -= (data.power/2);
+            myPoke.stage[1].hp -= (myPoke.pokemonOutMoves[0].power/2);
+            myPoke.currentAttacker = myPoke.pokemonOut;
+          });
         // var hpCut = pokemonOut.hp -  random;
-
       }
-    }
+  },
 
-  }
+  // checkFaint: function(){
+  //   if (this.pokemonOut.hp <= 0){
+  //     this.pokemonOut.faint = true;
+  //     // switch pokemon
+  //   }
+  //
+  //   if(myPoke.)
+  // }
+  // play: function(){
+  //         console.log("Random " + this.stage[1].name + " appears");
+  //         console.log(this.stage[0].username + ' sends out ' + this.stage[0].pokemons[0].name);
+  //       },
+  // show:function(){
+  //   return game.stage[0].pokeshow();
+  // },
+  // switch: function(){
+  //   this.stage[0].pokeshow();
+  // },
+  // }
 
 
 
