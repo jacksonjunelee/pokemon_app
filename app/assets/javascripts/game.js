@@ -12,9 +12,11 @@ var game = {
   },
   switch: function(){
     this.stage[0].pokeshow();
+  },
+
+  attackPhase:function(){
+    
   }
-
-
 
 
 
