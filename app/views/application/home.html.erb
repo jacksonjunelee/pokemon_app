@@ -18,7 +18,6 @@ $(function(){
 var gameStart= function(){
   loadGameDiv();
   game.start(this.pokemon);
-  setImages(game);
   deleteLocation = locations.splice(this.index,1);
   console.log(locations);
   // indexes = $.map(list, function(obj, index) {
@@ -42,28 +41,33 @@ var loadGameDiv = function() {
   var itemButton = $('<button>').addClass('option').attr('id', 'item').text('Items')
   var fleeButton = $('<button>').addClass('option').attr('id', 'flee').text('Flee')
 
-  //image
+  var myName = $('<label>').addClass('me').attr('id','me')
+  var myPokemonName = $('<label>').addClass('me').attr('id','myPokemonName');
+  var myPokemonImageTag = $('<img>').addClass('me').attr('id','myPokemon');
+  var myPokemonImageHp = $('<label>').addClass('me').attr('id','myPokemonHp');
 
-  // $.get('/pokemons/' + firstPokemon.api_ref + '/sprite/fetch').done(function(data){
-  //   myPokemonImageTag.attr('src','http://pokeapi.co/' + data.image)
-  // });
 
   var pokemonName= $('<label>').addClass('pokeOpponent').attr('id','pokeName');
-
-  var myPokemonImageTag = $('<img>').addClass('me').attr('id','me');
   var pokemonImageTag = $('<img>').addClass('pokeOpponent').attr('id','pokeImg');
+  var pokemonHp = $('<label>').addClass('pokeOpponent').attr('id','pokeHp');
+
+  var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent');
+  var myPokemonDiv = $('<div>').attr('id','myPokemonOut').css({"width":"10%","height":"20%",});
 
   optionDiv.append(attackButton).append(switchButton).append(itemButton).append(fleeButton);
-  myPokemonImageTag.appendTo(gameDiv);
-  pokemonImageTag.appendTo(gameDiv);
-  pokemonName.appendTo(gameDiv);
+  pokemonName.appendTo(pokemonOpponentDiv);
+  pokemonImageTag.appendTo(pokemonOpponentDiv);
+  pokemonHp.appendTo(pokemonOpponentDiv);
+  myName.appendTo(myPokemonDiv);
+  myPokemonName.appendTo(myPokemonDiv);
+  myPokemonImageTag.appendTo(myPokemonDiv);
+  myPokemonImageHp.appendTo(myPokemonDiv);
+  pokemonOpponentDiv.appendTo(gameDiv);
+  myPokemonDiv.appendTo(gameDiv);
   optionDiv.appendTo(gameDiv);
 
   gameDiv.appendTo('body');
 
 }
 
-var setImages = function(mufasa) {
-  console.log(mufasa);
-}
 </script>
