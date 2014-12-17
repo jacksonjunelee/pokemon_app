@@ -1,14 +1,15 @@
 class TrainersController < ApplicationController
-  ActiveRecord::Base.include_root_in_json = true
-  
+  # ActiveRecord::Base.include_root_in_json = true
+
   def index
   end
 
   def show
-    @trainer=Trainer.find(params[:id])
+    @trainer = Trainer.find(params[:id])
+    @trainer_pokemons = Pokemon.where(trainer_id: params[:id]).limit(6)
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: @trainer.to_json(include: :pokemons)}
+      format.json { render json: [@trainer, @trainer_pokemons]}
     end
   end
 

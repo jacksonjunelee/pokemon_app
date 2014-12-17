@@ -12,6 +12,11 @@ var game = {
   assign: function(){
           var outmoves = [];
           for (var i = 0; i < 4; i++){
+            // for (var j=0; j< game.stage[0].pokemons.length; j++){
+            //   if (this.stage[0].pokemons[j].faint == false){
+            //     this.pokemonOut = this.stage[0].pokemons[j];
+            //   }
+            // }
             var move = this.pokemonOut.randomMoves[i].resource_uri;
             $.get('http://www.pokeapi.co' + move).done(function(data){
               outmoves.push(data);

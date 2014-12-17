@@ -5,7 +5,7 @@ var Me = function(id){
   var me =this;
   $.get('/trainers/' + id +'.json').done(function(data){
           me.username = data.username;
-          me.pokemons = data.pokemons;
+          me.pokemons = data[1];
 
           // for (var i = 0; i < me.pokemons.length; i++){
           //   var integer = i;
