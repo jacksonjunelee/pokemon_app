@@ -165,7 +165,7 @@ var loadItem = function(){
   ItemDiv.append(catchButton);
 
   $('div#options').replaceWith(ItemDiv);
-  $(ItemDiv).on('click','button.catchPokemon',gameCatch);
+  $(ItemDiv).on('click','button#catchPokemon',gameCatch);
 }
 
 var gameCatch = function(){
