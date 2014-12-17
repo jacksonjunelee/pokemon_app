@@ -26,6 +26,7 @@ Me.prototype.pokeshow = function(){
 Me.prototype.pokeswitch = function(index){
   // this.pokemons[index];
   game.pokemonOut = game.stage[0].pokemons[index];
+  $('.textarea').append("\n" + game.stage[0].username + " sends out " + game.pokemonOut.name);
     // if (game.pokemonOut.randomMoves === []){
     game.pokemonOut.randomMoves = [];
     $.get('/pokemons/'+ game.pokemonOut.api_ref + '/pokemon/fetch').done(function(data){

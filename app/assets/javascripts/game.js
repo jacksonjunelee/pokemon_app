@@ -36,10 +36,12 @@ var game = {
 
   attackPhase:function(id){
       if (this.currentAttacker === this.pokemonOut){
-        this.stage[1].hp -= (this.pokemonOutMoves[id].power/3);
+        this.stage[1].hp -= Math.round(this.pokemonOutMoves[id].power/3);
+        $('.textarea').append("\n"+ this.pokemonOut.name + " attacks");
+        $('.textarea').append("\n"+ this.pokemonOut.name + " used " + this.pokemonOutMoves[id].name);
+        $('.textarea').append("\n"+ this.pokemonOut.name + " deals " + Math.round(this.pokemonOutMoves[id].power/3) + " damage");
         this.hpRender();
-        console.log(this.pokemonOutMoves[id].power/3);
-        console.log("MyCurrentAttacker is attacking");
+        console.log(Math.round(this.pokemonOutMoves[id].power/3));
         this.checkFaint();
         this.currentAttacker = this.stage[1];
         if (this.stage[1].faint === false){
@@ -57,12 +59,12 @@ var game = {
     var random = this.stage[1].moves[Math.floor(Math.random()*this.stage[1].moves.length)];
     var myPoke = this;
     $.get('http://www.pokeapi.co' + random.resource_uri).done(function(data){
-      myPoke.pokemonOut.hp -= (data.power/3);
+      myPoke.pokemonOut.hp -= Math.round(data.power/3);
       myPoke.hpRender();
       myPoke.currentAttacker = myPoke.pokemonOut;
-      console.log(data);
-      console.log("ememy pokemon attacking");
-      console.log(data.power/3);
+      $('.textarea').append("\nEnemy pokemon attacks");
+      $('.textarea').append("\nEnemy " + myPoke.stage[1].name + " used " + data.name);
+      $('.textarea').append("\nEnemy " + myPoke.stage[1].name + " deals " + Math.round(data.power/3) + " damage");
       myPoke.checkFaint();
       myPoke.checkSwitch();
     });
@@ -76,7 +78,9 @@ var game = {
 
     if(this.stage[1].hp <= 0){
       this.stage[1].faint = true;
+      debugger;
       $('#gameConsole').remove();
+      this.stage[1].faint = false;
       var me = this;
       $.get('/pokemons/'+ this.pokemonOut.api_ref + '/pokemon/fetch').done(function(data){
         me.pokemonOut.randomMoves = [];

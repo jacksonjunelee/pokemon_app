@@ -18,6 +18,8 @@ function Pokemon(id){
     }
     $('#pokeImg').attr('src', data[1])
     game.checkFirstMove();
+    $('.textarea').append("Wild " + pokemon.name + " appears");
+    $('.textarea').append("\nYou send out " + game.pokemonOut.name);
     });
 }
 Pokemon.prototype.attack = function(move){

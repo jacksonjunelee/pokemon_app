@@ -43,6 +43,37 @@ var loadGameDiv = function() {
   var myPokemonImageTag = $('<img>').addClass('me').attr('id','myPokemon');
   var myPokemonImageHp = $('<label>').addClass('me').attr('id','myPokemonHp');
 
+  var textConsole = $('<textarea>').addClass('textarea').css({"width": "80%", "height": "35%"});
+  jQuery.fn.extend({
+    insertAtCaret: function(myValue){
+      return this.each(function(i) {
+        if (document.selection) {
+          //For browsers like Internet Explorer
+          this.focus();
+          var sel = document.selection.createRange();
+          sel.text = myValue;
+          this.focus();
+        }
+        else if (this.selectionStart || this.selectionStart == '0') {
+          //For browsers like Firefox and Webkit based
+          var startPos = this.selectionStart;
+          var endPos = this.selectionEnd;
+          var scrollTop = this.scrollTop;
+          this.value = this.value.substring(0, startPos)+myValue+this.value.substring(endPos,this.value.length);
+          this.focus();
+          this.selectionStart = startPos + myValue.length;
+          this.selectionEnd = startPos + myValue.length;
+          this.scrollTop = scrollTop;
+        } else {
+          this.value += myValue;
+          this.focus();
+        }
+      });
+    }
+  });
+
+  $('#element1, #element2, #element3, .class-of-elements').insertAtCaret('text');
+
   var pokemonName= $('<label>').addClass('pokeOpponent').attr('id','pokeName');
   var pokemonImageTag = $('<img>').addClass('pokeOpponent').attr('id','pokeImg');
   var pokemonHp = $('<label>').addClass('pokeOpponent').attr('id','pokeHp');
@@ -50,15 +81,22 @@ var loadGameDiv = function() {
   var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent');
   var myPokemonDiv = $('<div>').attr('id','myPokemonOut').css({"width":"10%","height":"20%",});
 
-
+  // opponent pokemon is put on div
   pokemonName.appendTo(pokemonOpponentDiv);
   pokemonImageTag.appendTo(pokemonOpponentDiv);
   pokemonHp.appendTo(pokemonOpponentDiv);
+
+
+  // Me and my Pokemon are put on Div
   myName.appendTo(myPokemonDiv);
   myPokemonName.appendTo(myPokemonDiv);
   myPokemonImageTag.appendTo(myPokemonDiv);
   myPokemonImageHp.appendTo(myPokemonDiv);
+
+  // All Divs put on the body
   pokemonOpponentDiv.appendTo(gameDiv);
+  // text Console on the body
+  textConsole.appendTo(gameDiv);
   myPokemonDiv.appendTo(gameDiv);
   loadOptionDiv(gameDiv);
 
@@ -79,7 +117,7 @@ var loadOptionDiv = function(gameDiv){
 
   $(optionDiv).on('click','button#attack',loadGameAttack);
   $(optionDiv).on('click','button#switch',loadGameSwitch);
-  $(optionDiv).on('click','button#item','');
+  $(optionDiv).on('click','button#item',loadItem);
   $(optionDiv).on('click','button#flee',function(){
     $('div#gameConsole').remove();
   });
@@ -118,6 +156,20 @@ var gameAttack = function(){
   game.attackPhase(this.id);
   $('div#myPokemonAttackArray').hide();
   loadOptionDiv($('div#gameConsole'));
+}
+
+var loadItem = function(){
+  var ItemDiv = $('<div>').attr('id','items').css({"width":"90%","height":"20%",});
+  var catchButton = $('<button>').addClass('catch').attr('id', 'catch').text('Catch');
+
+  optionDiv.append(attackButton).append(switchButton).append(itemButton).append(fleeButton);
+  (optionDiv).appendTo(gameDiv);
+
+  $(optionDiv).on('click','button#attack',loadGameAttack);
+  $(optionDiv).on('click','button#switch',loadGameSwitch);
+  $(optionDiv).on('click','button#item',loadItem);
+  $(optionDiv).on('click','button#flee',function(){
+    $('div#gameConsole').remove();
 }
 
 </script>
