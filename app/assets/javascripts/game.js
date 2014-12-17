@@ -33,10 +33,10 @@ var game = {
             }
   },
 
-  attackPhase:function(){
+  attackPhase:function(id){
       if (this.currentAttacker === this.pokemonOut){
-        this.stage[1].hp -= (this.pokemonOutMoves[2].power/3);
-        console.log(this.pokemonOutMoves[2].power/3);
+        this.stage[1].hp -= (this.pokemonOutMoves[id].power/3);
+        console.log(this.pokemonOutMoves[id].power/3);
         console.log("MyCurrentAttacker is attacking");
         this.checkFaint();
         this.currentAttacker = this.stage[1];
