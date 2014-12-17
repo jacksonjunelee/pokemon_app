@@ -4,7 +4,7 @@ var Me = function(id){
   this.pokemons;
   var me =this;
   $.get('/trainers/' + id +'.json').done(function(data){
-          me.username = data.username;
+          me.username = data[0].username;
           me.pokemons = data[1];
 
           // for (var i = 0; i < me.pokemons.length; i++){
@@ -17,10 +17,6 @@ var Me = function(id){
               }
             });
       });
-};
-
-Me.prototype.pokeshow = function(){
-  return this.pokemons;
 };
 
 Me.prototype.pokeswitch = function(index){

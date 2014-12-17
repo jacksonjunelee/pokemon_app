@@ -6,7 +6,7 @@ class TrainersController < ApplicationController
 
   def show
     @trainer = Trainer.find(params[:id])
-    @trainer_pokemons = Pokemon.where(trainer_id: params[:id]).limit(6)
+    @trainer_pokemons = Pokemon.where(trainer_id: params[:id],position: [1..6]).order(position: :asc)
     respond_to do |format|
       format.html { render :show }
       format.json { render json: [@trainer, @trainer_pokemons]}

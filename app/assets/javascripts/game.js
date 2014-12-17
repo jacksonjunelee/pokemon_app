@@ -25,7 +25,7 @@ var game = {
           this.pokemonOutMoves = outmoves;
 
           $('#username').text(this.stage[0].username);
-          $('#myPokemonName').text(this.pokemonOut.nickname);
+          $('#myPokemonName').text("\n" + this.pokemonOut.name + "\n" + this.pokemonOut.nickname);
           $('#myPokemonHp').text('Hp:' + this.pokemonOut.hp);
           $('#myPokemon').attr('src', this.pokemonOut.battle_img);
 
@@ -115,20 +115,5 @@ var game = {
     $('#myPokemonHp').text('Hp:' + this.pokemonOut.hp);
     $('#pokeHp').text('Hp:' + this.stage[1].hp);
   }
-  // play: function(){
-  //         console.log("Random " + this.stage[1].name + " appears");
-  //         console.log(this.stage[0].username + ' sends out ' + this.stage[0].pokemons[0].name);
-  //       },
-  // show:function(){
-  //   return game.stage[0].pokeshow();
-  // },
-  // switch: function(){
-  //   this.stage[0].pokeshow();
-  // },
-  // }
-
-
-
-
 
 };

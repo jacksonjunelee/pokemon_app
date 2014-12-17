@@ -1,5 +1,6 @@
 class PokemonsController < ApplicationController
-  skip_before_filter  :verify_authenticity_token
+  validates :position, uniqueness: {scope: :trainer_id}
+
   def index
   end
 
