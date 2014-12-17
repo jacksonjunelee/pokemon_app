@@ -85,16 +85,15 @@ var game = {
           me.pokemonOut.randomMoves.push(random);
         }
       });
-      for (var i=1; i<this.stage[0].pokemons;i++){
-        this.stage[0].pokemons[i].randomMoves = [];
-      }
+      // for (var i=1; i<this.stage[0].pokemons;i++){
+      //   this.stage[0].pokemons[i].randomMoves = [];
+      // }
     }
   },
 
   checkSwitch: function(){
     if (this.pokemonOut.faint ===  true){
-      // need to change to input
-      this.stage[0].pokeswitch(1);
+      $('button#switch').click();
     }
 
     else {
