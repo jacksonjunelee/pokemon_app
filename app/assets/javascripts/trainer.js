@@ -26,8 +26,16 @@ Me.prototype.pokeshow = function(){
 Me.prototype.pokeswitch = function(index){
   // this.pokemons[index];
   game.pokemonOut = game.stage[0].pokemons[index];
-  game.assign();
-  game.checkFirstMove();
+    // if (game.pokemonOut.randomMoves === []){
+    $.get('/pokemons/'+ game.pokemonOut.api_ref + '/pokemon/fetch').done(function(data){
+      for (var i =0; i < 4; i++){
+        var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
+        game.pokemonOut.randomMoves.push(random);
+      }
+    game.assign();
+    game.checkFirstMove();
+    });
+  // }
 };
 
 

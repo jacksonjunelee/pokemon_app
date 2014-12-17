@@ -81,7 +81,7 @@ var loadOptionDiv = function(gameDiv){
   $(optionDiv).on('click','button#switch',loadGameSwitch);
   $(optionDiv).on('click','button#item','');
   $(optionDiv).on('click','button#flee',function(){
-    $('div#gameConsole').hide();
+    $('div#gameConsole').remove();
   });
 }
 
@@ -116,6 +116,8 @@ var gameSwitch = function(){
 
 var gameAttack = function(){
   game.attackPhase(this.id);
+  $('div#myPokemonAttackArray').hide();
+  loadOptionDiv($('div#gameConsole'));
 }
 
 </script>
