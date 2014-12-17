@@ -1,5 +1,4 @@
 class PokemonsController < ApplicationController
-  validates :position, uniqueness: {scope: :trainer_id}
 
   def index
   end
