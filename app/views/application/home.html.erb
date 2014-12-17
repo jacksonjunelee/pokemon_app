@@ -14,7 +14,9 @@ $(function(){
 });
 
 var gameStart= function(){
-  loadGameDiv();
+  if (!$('div#gameConsole').is(':visible')){
+    loadGameDiv();
+  }
   game.start(this.pokemon);
   game.assign();
   game.checkFirstMove();
@@ -108,7 +110,7 @@ var loadGameAttack = function(){
 var gameSwitch = function(){
   game.stage[0].pokeswitch(parseInt(this.id));
   $('div#myPokemonArray').hide();
-  loadOptionDiv();
+  loadOptionDiv($('div#gameConsole'));
 }
 
 var gameAttack = function(){
