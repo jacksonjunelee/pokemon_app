@@ -160,16 +160,19 @@ var gameAttack = function(){
 
 var loadItem = function(){
   var ItemDiv = $('<div>').attr('id','items').css({"width":"90%","height":"20%",});
-  var catchButton = $('<button>').addClass('catch').attr('id', 'catch').text('Catch');
+  var catchButton = $('<button>').addClass('catch').attr('id', 'catchPokemon').text('Catch');
 
-  optionDiv.append(attackButton).append(switchButton).append(itemButton).append(fleeButton);
-  (optionDiv).appendTo(gameDiv);
+  ItemDiv.append(catchButton);
 
-  $(optionDiv).on('click','button#attack',loadGameAttack);
-  $(optionDiv).on('click','button#switch',loadGameSwitch);
-  $(optionDiv).on('click','button#item',loadItem);
-  $(optionDiv).on('click','button#flee',function(){
-    $('div#gameConsole').remove();
+  $('div#options').replaceWith(ItemDiv);
+  $(ItemDiv).on('click','button.catchPokemon',gameCatch);
+}
+
+var gameCatch = function(){
+  game.stage[0].catch;
+  $('div#items').hide();
+  loadOptionDiv($('div#gameConsole'));
+
 }
 
 </script>

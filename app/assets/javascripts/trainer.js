@@ -42,19 +42,21 @@ Me.prototype.pokeswitch = function(index){
 
 
 Me.prototype.catch = function(){
-  console.log(pokemon);
+  console.log(game.stage[1]);
   // add if statement with MAth.random, var chances
 
   // nickname
   var catchpokemon = {
     pokemon: {
-      name: pokemon.name,
-      api_ref: pokemon.id,
-      hp: pokemon.hp,
-      trainer_id: this.id
+      name: game.stage[1].name,
+      api_ref: game.stage[1].id,
+      hp: game.stage[1].hp,
+      speed: game.stage[1].speed,
+      trainer_id: this.id,
+      battle_img: "/assets/pokemon-main-sprites/yellow/back/" + game.stage[1].id + ".png"
     }
   };
 
-  $.post('/pokemons', catchpokemon);
+  $.post('/pokemons', catchpokemon).done($('#gameConsole').remove());
   // .done(); close window
 };
