@@ -68,7 +68,6 @@ var loadGameDiv = function() {
 }
 
 var loadOptionDiv = function(gameDiv){
-  console.log("moo");
   var optionDiv = $('<div>').attr('id','options').css({"width":"90%","height":"20%",});
   var attackButton = $('<button>').addClass('option').attr('id', 'attack').text('Attack');
   var switchButton = $('<button>').addClass('option').attr('id', 'switch').text('PKMN');
@@ -81,7 +80,9 @@ var loadOptionDiv = function(gameDiv){
   $(optionDiv).on('click','button#attack',loadGameAttack);
   $(optionDiv).on('click','button#switch',loadGameSwitch);
   $(optionDiv).on('click','button#item','');
-  $(optionDiv).on('click','button#flee','');
+  $(optionDiv).on('click','button#flee',function(){
+    $('div#gameConsole').hide();
+  });
 }
 
 var loadGameSwitch = function(){

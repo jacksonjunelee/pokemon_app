@@ -36,26 +36,33 @@ var game = {
   attackPhase:function(id){
       if (this.currentAttacker === this.pokemonOut){
         this.stage[1].hp -= (this.pokemonOutMoves[id].power/3);
+        this.hpRender();
         console.log(this.pokemonOutMoves[id].power/3);
         console.log("MyCurrentAttacker is attacking");
         this.checkFaint();
         this.currentAttacker = this.stage[1];
+        this.enemyAttack();
       }
 
       else {
-        var random = this.stage[1].moves[Math.floor(Math.random()*this.stage[1].moves.length)];
-        var myPoke = this;
-          $.get('http://www.pokeapi.co' + random.resource_uri).done(function(data){
-            myPoke.pokemonOut.hp -= (data.power/3);
-            myPoke.currentAttacker = myPoke.pokemonOut;
-            console.log(data);
-            console.log("ememy pokemon attacking");
-            console.log(data.power/3);
-          });
-            this.checkFaint();
-            this.checkSwitch();
+            this.enemyAttack();
         // var hpCut = pokemonOut.hp -  random;
       }
+  },
+
+  enemyAttack: function(){
+    var random = this.stage[1].moves[Math.floor(Math.random()*this.stage[1].moves.length)];
+    var myPoke = this;
+    $.get('http://www.pokeapi.co' + random.resource_uri).done(function(data){
+      myPoke.pokemonOut.hp -= (data.power/3);
+      myPoke.hpRender();
+      myPoke.currentAttacker = myPoke.pokemonOut;
+      console.log(data);
+      console.log("ememy pokemon attacking");
+      console.log(data.power/3);
+      myPoke.checkFaint();
+      myPoke.checkSwitch();
+    });
   },
 
   checkFaint: function(){
