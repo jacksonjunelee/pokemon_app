@@ -1,5 +1,6 @@
 class TrainersController < ApplicationController
-
+  ActiveRecord::Base.include_root_in_json = true
+  
   def index
   end
 

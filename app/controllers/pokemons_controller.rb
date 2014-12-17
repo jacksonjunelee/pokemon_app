@@ -1,5 +1,5 @@
 class PokemonsController < ApplicationController
-
+  skip_before_filter  :verify_authenticity_token
   def index
   end
 
@@ -35,7 +35,6 @@ class PokemonsController < ApplicationController
   private
 
   def pokemon_params
-    params.require(:pokemon).permit(:name,:api_ref,:hp,:trainer_id)
+    params.require(:pokemon).permit(:name, :api_ref, :hp, :speed, :trainer_id, :battle_img)
   end
-
 end

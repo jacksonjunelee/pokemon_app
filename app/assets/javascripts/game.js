@@ -7,7 +7,7 @@ var game = {
   start: function(randomPokemon){
           this.pokemonOut = this.stage[0].pokemons[0];
           var pokemon = new Pokemon(randomPokemon);
-          this.stage.push(pokemon);
+          this.stage.splice(1,1,pokemon);
   },
   assign: function(){
           var outmoves = [];
@@ -19,7 +19,7 @@ var game = {
           }
           this.pokemonOutMoves = outmoves;
 
-          $('#me').text(this.stage[0].username);
+          $('#username').text(this.stage[0].username);
           $('#myPokemonName').text(this.pokemonOut.nickname);
           $('#myPokemonHp').text('Hp:' + this.pokemonOut.hp);
           $('#myPokemon').attr('src', this.pokemonOut.battle_img);
@@ -37,9 +37,9 @@ var game = {
   attackPhase:function(id){
       if (this.currentAttacker === this.pokemonOut){
         this.stage[1].hp -= Math.round(this.pokemonOutMoves[id].power/3);
-        $('.textarea').append("\n"+ this.pokemonOut.name + " attacks");
-        $('.textarea').append("\n"+ this.pokemonOut.name + " used " + this.pokemonOutMoves[id].name);
-        $('.textarea').append("\n"+ this.pokemonOut.name + " deals " + Math.round(this.pokemonOutMoves[id].power/3) + " damage");
+        $('.textarea').append("\n"+ this.pokemonOut.name + " attacks").animate({scrollTop: 600});
+        $('.textarea').append("\n"+ this.pokemonOut.name + " used " + this.pokemonOutMoves[id].name).animate({scrollTop: 600});
+        $('.textarea').append("\n"+ this.pokemonOut.name + " deals " + Math.round(this.pokemonOutMoves[id].power/3) + " damage").animate({scrollTop: 600});
         this.hpRender();
         console.log(Math.round(this.pokemonOutMoves[id].power/3));
         this.checkFaint();
@@ -50,6 +50,7 @@ var game = {
       }
 
       else {
+        $('.textarea').append("\nEnemy speed is higher; Enemy attacks").animate({scrollTop: 600});
             this.enemyAttack();
         // var hpCut = pokemonOut.hp -  random;
       }
@@ -62,14 +63,15 @@ var game = {
       myPoke.pokemonOut.hp -= Math.round(data.power/3);
       myPoke.hpRender();
       myPoke.currentAttacker = myPoke.pokemonOut;
-      $('.textarea').append("\nEnemy pokemon attacks");
-      $('.textarea').append("\nEnemy " + myPoke.stage[1].name + " used " + data.name);
-      $('.textarea').append("\nEnemy " + myPoke.stage[1].name + " deals " + Math.round(data.power/3) + " damage");
+      $('.textarea').append("\nEnemy pokemon attacks").animate({scrollTop: 600});
+      $('.textarea').append("\nEnemy " + myPoke.stage[1].name + " used " + data.name).animate({scrollTop: 600});
+      $('.textarea').append("\nEnemy " + myPoke.stage[1].name + " deals " + Math.round(data.power/3) + " damage").animate({scrollTop: 600});
       myPoke.checkFaint();
       myPoke.checkSwitch();
     });
   },
 
+// checks Faint and sets up next battle
   checkFaint: function(){
     if (this.pokemonOut.hp <= 0){
       this.pokemonOut.faint = true;
@@ -78,7 +80,6 @@ var game = {
 
     if(this.stage[1].hp <= 0){
       this.stage[1].faint = true;
-      debugger;
       $('#gameConsole').remove();
       this.stage[1].faint = false;
       var me = this;

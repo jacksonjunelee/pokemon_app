@@ -1,5 +1,5 @@
 var Me = function(id){
-  this.id,
+  this.id = id,
   this.username;
   this.pokemons;
   var me =this;
@@ -26,7 +26,7 @@ Me.prototype.pokeshow = function(){
 Me.prototype.pokeswitch = function(index){
   // this.pokemons[index];
   game.pokemonOut = game.stage[0].pokemons[index];
-  $('.textarea').append("\n" + game.stage[0].username + " sends out " + game.pokemonOut.name);
+  $('.textarea').append("\n" + game.stage[0].username + " sends out " + game.pokemonOut.name).animate({scrollTop: 600});
     // if (game.pokemonOut.randomMoves === []){
     game.pokemonOut.randomMoves = [];
     $.get('/pokemons/'+ game.pokemonOut.api_ref + '/pokemon/fetch').done(function(data){
@@ -44,9 +44,8 @@ Me.prototype.pokeswitch = function(index){
 Me.prototype.catch = function(){
   console.log(game.stage[1]);
   // add if statement with MAth.random, var chances
-
   // nickname
-  var catchpokemon = {
+  var catchPokemon = {
     pokemon: {
       name: game.stage[1].name,
       api_ref: game.stage[1].id,
@@ -56,7 +55,9 @@ Me.prototype.catch = function(){
       battle_img: "/assets/pokemon-main-sprites/yellow/back/" + game.stage[1].id + ".png"
     }
   };
-
-  $.post('/pokemons', catchpokemon).done($('#gameConsole').remove());
+    // game.stage.pokemons.push(catchPokemon.pokemon);
+  $.post('/pokemons', catchPokemon).done(function(){
+    $('#gameConsole').remove();
+  });
   // .done(); close window
 };
