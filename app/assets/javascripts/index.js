@@ -10,7 +10,7 @@ $(function(){
   $('button#restart').on('click',restartGame);
 
   if (localStorage.length === 5){
-    $('body').prepend($('<p>').attr('id',"won").text("You Win").css({"font-size":"500%"}));
+    $('body').prepend($('<p>').attr('id',"won").text("No More Pokemon").css({"font-size":"300%"}));
   }
 
   initialize();

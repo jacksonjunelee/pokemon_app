@@ -29,13 +29,17 @@ class PokemonsController < ApplicationController
 
   def fetch
     @pokemons = HTTParty.get('http://www.pokeapi.co/api/v1/' + params[:type] + '/' + params[:id])
-    @image_link = ActionController::Base.helpers.image_path("pokemon-main-sprites/yellow/#{params[:id]}.png")
+    @image_link = ActionController::Base.helpers.image_path("#{params[:id]}.png")
     render json: [@pokemons,@image_link]
   end
 
+  def image
+    send_file Rails.root.join('app','assets','images','back',"#{params[:id]}.png")
+  end
   private
 
   def pokemon_params
     params.require(:pokemon).permit(:name, :api_ref, :hp, :speed, :trainer_id, :position, :max_hp, :battle_img)
   end
+
 end
