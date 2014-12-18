@@ -35,7 +35,9 @@
 }
 #gameConsole{
   padding: 5px 5px;
-  border-image: 'http://media.edge-online.com/wp-content/uploads/sites/117/2012/10/Game-Boy-color.jpg'  30 30 stretch;
+  border: 5px solid transparent;
+  /*border-color:black;*/
+  border-image:url("/assets/313284-gbcolor (purple).png") 500 500 stretch;
 }
 
 .textarea{
