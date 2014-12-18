@@ -31,6 +31,8 @@ gem 'pry-rails', group: :development
 gem 'bcrypt', '~> 3.1.7'
 gem "paperclip", "~> 4.2"
 gem 'httparty'
+gem 'awesome_print'
+gem 'twilio-ruby', '~> 3.12'
 
 # Use unicorn as the app server
 # gem 'unicorn'

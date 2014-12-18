@@ -1,51 +1,59 @@
 var Me = function(id){
-  this.id,
+  this.id = id,
   this.username;
   this.pokemons;
   var me =this;
   $.get('/trainers/' + id +'.json').done(function(data){
-          me.username = data.username;
-          $('#me').text(me.username);
-          me.pokemons = data.pokemons;
-          $('#myPokemonName').text(me.pokemons[0].nickname);
-          $('#myPokemonHp').text('Hp:' + me.pokemons[0].hp);
-          $('#myPokemon').attr('src', me.pokemons[0].battle_img);
+          me.username = data[0].username;
+          me.pokemons = data[1];
 
           // for (var i = 0; i < me.pokemons.length; i++){
           //   var integer = i;
             $.get('/pokemons/'+ me.pokemons[0].api_ref + '/pokemon/fetch').done(function(data){
-              me.pokemons[0].moves0 = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
-              me.pokemons[0].moves1 = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
-              me.pokemons[0].moves2 = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
-              me.pokemons[0].moves3 = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
+                me.pokemons[0].randomMoves = [];
+              for (var i =0; i < 4; i++){
+                var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
+                me.pokemons[0].randomMoves.push(random);
+              }
             });
       });
 };
 
-Me.prototype.pokeshow = function(){
-  return this.pokemons;
-};
-
 Me.prototype.pokeswitch = function(index){
   // this.pokemons[index];
-  var battlePokemon = new Pokemon(index);
-  return battlePokemon;
+  game.pokemonOut = game.stage[0].pokemons[index];
+  $('.textarea').append("\n" + game.stage[0].username + " sends out " + game.pokemonOut.name).animate({scrollTop: 600});
+    // if (game.pokemonOut.randomMoves === []){
+    game.pokemonOut.randomMoves = [];
+    $.get('/pokemons/'+ game.pokemonOut.api_ref + '/pokemon/fetch').done(function(data){
+      for (var i =0; i < 4; i++){
+        var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
+        game.pokemonOut.randomMoves.push(random);
+      }
+    game.assign();
+    game.checkFirstMove();
+    });
+  // }
 };
 
-Me.prototype.catch = function(){
-  console.log(pokemon);
-  // add if statement with MAth.random, var chances
 
+Me.prototype.catch = function(){
+  console.log(game.stage[1]);
+  // add if statement with MAth.random, var chances
   // nickname
-  var catchpokemon = {
+  var catchPokemon = {
     pokemon: {
-      name: pokemon.name,
-      api_ref: pokemon.id,
-      hp: pokemon.hp,
-      trainer_id: this.id
+      name: game.stage[1].name,
+      api_ref: game.stage[1].id,
+      hp: game.stage[1].hp,
+      speed: game.stage[1].speed,
+      trainer_id: this.id,
+      battle_img: "/assets/pokemon-main-sprites/yellow/back/" + game.stage[1].id + ".png"
     }
   };
-
-  $.post('/pokemons', catchpokemon);
+    // game.stage.pokemons.push(catchPokemon.pokemon);
+  $.post('/pokemons', catchPokemon).done(function(){
+    $('#gameConsole').remove();
+  });
   // .done(); close window
 };

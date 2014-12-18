@@ -6,18 +6,21 @@
 
 <script>
 $(function(){
-  $('body').on('click','button#attack','');
-  $('body').on('click','button#switch','');
-  $('body').on('click','button#item','');
-  $('body').on('click','button#flee','');
+  var me = new Me(1);
+  game.stage.push(me);
 
 // var map = $('<div>').attr('id','map-canvas').css({"width":"900px","height":"900px"});
 // $('body').appendTo(map);
 });
 
 var gameStart= function(){
-  loadGameDiv();
+  if (!$('div#gameConsole').is(':visible')){
+    loadGameDiv();
+  }
   game.start(this.pokemon);
+  game.assign();
+  game.checkFirstMove();
+
   deleteLocation = locations.splice(this.index,1);
   console.log(locations);
   // indexes = $.map(list, function(obj, index) {
@@ -33,19 +36,14 @@ var gameStart= function(){
 
 var loadGameDiv = function() {
 
-  var gameDiv = $('<div>').attr('id','gameConsole').css({"width":"400px","height":"500px","background-color":"red"});
-  // options
-  var optionDiv = $('<div>').attr('id','options').css({"width":"90%","height":"20%",});
-  var attackButton = $('<button>').addClass('option').attr('id', 'attack').text('Attack')
-  var switchButton = $('<button>').addClass('option').attr('id', 'switch').text('PKMN')
-  var itemButton = $('<button>').addClass('option').attr('id', 'item').text('Items')
-  var fleeButton = $('<button>').addClass('option').attr('id', 'flee').text('Flee')
+  var gameDiv = $('<div>').attr('id','gameConsole').css({"width":"400px","height":"500px",});
 
-  var myName = $('<label>').addClass('me').attr('id','me')
+  var myName = $('<label>').addClass('username').attr('id','username')
   var myPokemonName = $('<label>').addClass('me').attr('id','myPokemonName');
   var myPokemonImageTag = $('<img>').addClass('me').attr('id','myPokemon');
   var myPokemonImageHp = $('<label>').addClass('me').attr('id','myPokemonHp');
 
+  var textConsole = $('<textarea>').addClass('textarea').css({"width": "80%", "height": "35%"});
 
   var pokemonName= $('<label>').addClass('pokeOpponent').attr('id','pokeName');
   var pokemonImageTag = $('<img>').addClass('pokeOpponent').attr('id','pokeImg');
@@ -54,19 +52,117 @@ var loadGameDiv = function() {
   var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent');
   var myPokemonDiv = $('<div>').attr('id','myPokemonOut').css({"width":"10%","height":"20%",});
 
-  optionDiv.append(attackButton).append(switchButton).append(itemButton).append(fleeButton);
+  // opponent pokemon is put on div
   pokemonName.appendTo(pokemonOpponentDiv);
   pokemonImageTag.appendTo(pokemonOpponentDiv);
   pokemonHp.appendTo(pokemonOpponentDiv);
+
+
+  // Me and my Pokemon are put on Div
   myName.appendTo(myPokemonDiv);
   myPokemonName.appendTo(myPokemonDiv);
   myPokemonImageTag.appendTo(myPokemonDiv);
   myPokemonImageHp.appendTo(myPokemonDiv);
+
+  // All Divs put on the body
   pokemonOpponentDiv.appendTo(gameDiv);
+  // text Console on the body
+  textConsole.appendTo(gameDiv);
   myPokemonDiv.appendTo(gameDiv);
-  optionDiv.appendTo(gameDiv);
+  loadOptionDiv(gameDiv);
 
   gameDiv.appendTo('body');
+
+
+}
+
+var loadOptionDiv = function(gameDiv){
+  var optionDiv = $('<div>').attr('id','options').css({"width":"90%","height":"20%",});
+  var attackButton = $('<button>').addClass('option').attr('id', 'attack').text('Attack');
+  var switchButton = $('<button>').addClass('option').attr('id', 'switch').text('PKMN');
+  var itemButton = $('<button>').addClass('option').attr('id', 'item').text('Items');
+  var fleeButton = $('<button>').addClass('option').attr('id', 'flee').text('Flee');
+
+  optionDiv.append(attackButton).append(switchButton).append(itemButton).append(fleeButton);
+  (optionDiv).appendTo(gameDiv);
+
+  $(optionDiv).on('click','button#attack',loadGameAttack);
+  $(optionDiv).on('click','button#switch',loadGameSwitch);
+  $(optionDiv).on('click','button#item',loadItem);
+  $(optionDiv).on('click','button#flee',function(){
+    $('div#gameConsole').remove();
+  });
+}
+
+var loadGameSwitch = function(){
+  var allMyPokemonDiv = $('<div>').attr('id','myPokemonArray');
+  for (var i =0; i < game.stage[0].pokemons.length; i++){
+    var pokeButton = $('<button>').addClass('pokemonB').attr('id', i).text(game.stage[0].pokemons[i].name.toUpperCase());
+    (pokeButton).appendTo(allMyPokemonDiv);
+  }
+
+  $('div#options').replaceWith(allMyPokemonDiv);
+  // $(allMyPokemonDiv).on('mouseenter','button.pokemonSwitch',makeModalSwitch);
+  // $(allMyPokemonDiv).on('mouseleave','button.pokemonSwitch',removeModalSwitch);
+  $(allMyPokemonDiv).on('click','button.pokemonB',gameSwitch);
+}
+
+var loadGameAttack = function(){
+  var myPokemonAttackDiv = $('<div>').attr('id','myPokemonAttackArray');
+  for (var i =0; i < game.pokemonOutMoves.length; i++){
+    var attackButtons = $('<button>').addClass('pokemonAttack').attr('id', i).text(game.pokemonOutMoves[i].name);
+    (attackButtons).appendTo(myPokemonAttackDiv);
+  }
+
+  $('div#options').replaceWith(myPokemonAttackDiv);
+  $(myPokemonAttackDiv).on('mouseenter','button.pokemonAttack',makeModalAttack);
+  $(myPokemonAttackDiv).on('mouseleave','button.pokemonAttack',removeModalAttack);
+  $(myPokemonAttackDiv).on('click','button.pokemonAttack',gameAttack);
+
+}
+
+var gameSwitch = function(){
+  game.stage[0].pokeswitch(parseInt(this.id));
+  $('div#myPokemonArray').hide();
+  loadOptionDiv($('div#gameConsole'));
+}
+
+var gameAttack = function(){
+  game.attackPhase(this.id);
+  $('div#myPokemonAttackArray').hide();
+  loadOptionDiv($('div#gameConsole'));
+}
+
+var loadItem = function(){
+  var ItemDiv = $('<div>').attr('id','items').css({"width":"90%","height":"20%"});
+  var catchButton = $('<button>').addClass('catch').attr('id', 'catchPokemon').text('Catch');
+
+  ItemDiv.append(catchButton);
+
+  $('div#options').replaceWith(ItemDiv);
+  $(ItemDiv).on('click','button#catchPokemon',gameCatch);
+}
+
+var gameCatch = function(){
+  game.stage[0].catch();
+  $('div#items').hide();
+  loadOptionDiv($('div#gameConsole'));
+}
+
+var makeModalAttack = function(){
+  var modal = $('<div>').attr('id','modal');
+  var name = $('<label>').addClass('modalAttack').text('Move Name: ' + game.pokemonOutMoves[this.id].name);
+  var power = $('<label>').addClass('modalAttack').text('\nPower: ' + game.pokemonOutMoves[this.id].power);
+  var pp = $('<label>').addClass('modalAttack').text('\nPP: ' + game.pokemonOutMoves[this.id].pp);
+  var accuracy = $('<label>').addClass('modalAttack').text('\nAccuracy: ' + game.pokemonOutMoves[this.id].accuracy);
+  var description = $('<label>').addClass('modalAttack').text('\nDescription: ' + game.pokemonOutMoves[this.id].description);
+  modal.append(name).append(power).append(pp).append(accuracy).append(description);
+  modal.appendTo('div#gameConsole');
+  modal.show();
+}
+
+var removeModalAttack = function(){
+  $('div#modal').hide()
 
 }
 
