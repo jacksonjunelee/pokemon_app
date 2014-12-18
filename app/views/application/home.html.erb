@@ -27,13 +27,15 @@ var gameStart= function(){
   game.start(this.pokemon);
   game.checkFirstMove();
 
-  var deleteLocation = locations.splice(this.index,1);
-  var key = deleteLocation[0][0];
-  localStorage.setItem(key,JSON.stringify(deleteLocation[0]));
+  // var deleteLocation = locations.indexOf(this);
+
+  // var key = deleteLocation[0][0];
+  // console.log(key);
+  // localStorage.setItem(key,JSON.stringify(deleteLocation[0]));
   // var c = JSON.parse(deletedLocations);
 
-  console.log(locations);
-  console.log(deleteLocation);
+  // console.log(locations);
+  // console.log(deleteLocation);
 
   this.setMap(null);
   }
@@ -62,7 +64,7 @@ var loadGameDiv = function() {
   var pokemonHp = $('<label>').addClass('pokeOpponent').attr('id','pokeHp');
   var pokemonProgressBar = $('<progress>').attr('id','opponentHealth');
 
-  var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent').css({"width":"50%","height":"15%"});
+  var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent').css({"width":"60%","height":"15%"});
   var myPokemonDiv = $('<div>').attr('id','myPokemonOut').css({"width":"10%","height":"20%"});
   var myPokemonProgressBar = $('<progress>').attr('id','myHealth');
 
