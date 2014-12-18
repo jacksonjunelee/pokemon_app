@@ -1,4 +1,4 @@
-<div id="map-canvas" style="width: 400px;height: 500px;"></div>
+<!-- <div id="map-canvas" style="width: 400px;height: 500px;"></div> -->
 
 <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
 
@@ -8,27 +8,23 @@
 $(function(){
   var me = new Me(1);
   game.stage.push(me);
+  // $.cookie('deleteMarker', 'deleteLocation');
 
-// var map = $('<div>').attr('id','map-canvas').css({"width":"900px","height":"900px"});
-// $('body').appendTo(map);
+var map = $('<div>').attr('id','map-canvas').css({"width":"400px","height":"500px"});
+$('body').append(map);
 });
 
 var gameStart= function(){
   if (!$('div#gameConsole').is(':visible')){
     loadGameDiv();
   }
+
   game.start(this.pokemon);
   game.checkFirstMove();
 
-  deleteLocation = locations.splice(this.index,1);
+  var deleteLocation = locations.splice(this.index,1);
   console.log(locations);
-  // indexes = $.map(list, function(obj, index) {
-  //   if(obj.prop2 == "yutu") {
-  //     return index;
-  //   }
-  // })
-  //
-  // firstIndex = indexes[0]
+  console.log(deleteLocation);
   this.setMap(null);
   }
 

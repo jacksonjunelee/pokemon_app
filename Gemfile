@@ -33,6 +33,7 @@ gem "paperclip", "~> 4.2"
 gem 'httparty'
 gem 'awesome_print'
 gem 'twilio-ruby', '~> 3.12'
+gem 'jquery-cookie-rails', '~> 1.3.1.1'
 
 # Use unicorn as the app server
 # gem 'unicorn'

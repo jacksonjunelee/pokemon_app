@@ -44,18 +44,23 @@ var game = {
   },
 
   attackPhase:function(id){
+      // User pokemon attacks if it is currentAttacker
       if (this.currentAttacker === this.pokemonOut){
         this.stage[1].hp -= Math.round(this.pokemonOutMoves[id].power/3);
-        $('.textarea').append("\n"+ this.pokemonOut.name + " attacks").animate({scrollTop: 600});
-        $('.textarea').append("\n"+ this.pokemonOut.name + " used " + this.pokemonOutMoves[id].name).animate({scrollTop: 600});
-        $('.textarea').append("\n"+ this.pokemonOut.name + " deals " + Math.round(this.pokemonOutMoves[id].power/3) + " damage").animate({scrollTop: 600});
+        // puts attack,hp,damage information to text area
+        $('.textarea').append("\n"+ this.pokemonOut.name + " attacks").animate({scrollTop: 600}).append("\n"+ this.pokemonOut.name + " used " + this.pokemonOutMoves[id].name).animate({scrollTop: 600}).append("\n"+ this.pokemonOut.name + " deals " + Math.round(this.pokemonOutMoves[id].power/3) + " damage").animate({scrollTop: 600});
+        // renders hp bar
         this.hpRender();
         var health = document.getElementById("opponentHealth");
         health.value = this.stage[1].hp;
+        // check pokemon faint
         this.checkFaint();
         this.currentAttacker = this.stage[1];
         if ($('div#gameConsole').is(':visible')){
-          this.enemyAttack();
+          // this.enemyAttack();
+          setTimeout(function(){
+            game.enemyAttack();
+          },1500);
         }
       }
 
