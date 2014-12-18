@@ -54,7 +54,7 @@ var game = {
         health.value = this.stage[1].hp;
         this.checkFaint();
         this.currentAttacker = this.stage[1];
-        if (this.stage[1].faint === false){
+        if ($('div#gameConsole').is(':visible')){
           this.enemyAttack();
         }
       }

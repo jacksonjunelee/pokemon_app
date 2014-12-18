@@ -47,7 +47,7 @@ Me.prototype.catch = function(){
     return num.position;
   }).sort().pop();
   var position = takenPosition + 1;
-  
+
   var catchPokemon = {
     pokemon: {
       name: game.stage[1].name,
@@ -55,6 +55,8 @@ Me.prototype.catch = function(){
       hp: game.stage[1].hp,
       speed: game.stage[1].speed,
       trainer_id: this.id,
+      position: position,
+      max_hp: game.stage[1].max_hp,
       battle_img: "/assets/pokemon-main-sprites/yellow/back/" + game.stage[1].id + ".png"
     }
   };

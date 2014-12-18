@@ -3,12 +3,14 @@ function Pokemon(id){
   this.name;
   this.nickname;
   this.hp;
+  this.max_hp;
   this.faint = false;
   this.moves = [];
   var pokemon = this;
    $.get('/pokemons/' + id + '/pokemon/fetch').done(function(data){
       pokemon.speed = data[0].speed;
       pokemon.hp = data[0].hp;
+      pokemon.max_hp = data[0].hp;
       pokemon.name = data[0].name;
       $('#pokeName').text(pokemon.name);
       $('#pokeHp').text('Hp:' + pokemon.hp);
