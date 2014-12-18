@@ -16,11 +16,11 @@ function initialize() {
 * other.
 */
 var locations = [
-['Bondi Beach', -33.890542, 151.274856, 4, 150, 0, "/assets/pokemon-main-sprites/yellow/150.png"],
-['Coogee Beach', -33.923036, 151.259052, 5, 1, 1,"/assets/pokemon-main-sprites/yellow/1.png"],
-['Cronulla Beach', -34.028249, 151.157507, 3, 2, 2,"/assets/pokemon-main-sprites/yellow/2.png"],
-['Manly Beach', -33.80010128657071, 151.28747820854187, 2, 3, 3,"/assets/pokemon-main-sprites/yellow/3.png"],
-['Maroubra Beach', -33.950198, 151.259302, 1, 4,4,"/assets/pokemon-main-sprites/yellow/4.png"]
+['Bondi Beach', -33.890542, 151.274856, 4, 150,'<%= asset_path "150.png" %>'],
+['Coogee Beach', -33.923036, 151.259052, 5, 1,'<%= asset_path "1.png" %>'],
+['Cronulla Beach', -34.028249, 151.157507, 3, 2,'<%= asset_path "2.png" %>'],
+['Manly Beach', -33.80010128657071, 151.28747820854187, 2, 3,'<%= asset_path "3.png" %>'],
+['Maroubra Beach', -33.950198, 151.259302, 1, 4,'<%= asset_path "4.png" %>']
 ];
 
 for (var deleteMarkers in localStorage){
@@ -57,7 +57,6 @@ function setMarkers(map, locations) {
     var myLatLng = new google.maps.LatLng(location[1], location[2]);
     var marker = new google.maps.Marker({
       pokemon: location[4],
-      index: location[5],
       position: myLatLng,
       map: map,
       icon: {
