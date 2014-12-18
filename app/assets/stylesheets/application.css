@@ -21,7 +21,27 @@
    border: 2px solid cornsilk;
  }
 
- #options{
+  div#modal {
+   z-index: 10;
+   background: rgba(0,0,0,.8);
+   color: whitesmoke;
+   display:none;
+   /*left:30%;*/
+   /*top:20%;*/
+  }
+
+.modalAttack{
+  padding-top:5px;
+}
+#gameConsole{
+  padding: 5px 5px;
+  border-image: 'http://media.edge-online.com/wp-content/uploads/sites/117/2012/10/Game-Boy-color.jpg'  30 30 stretch;
+}
+
+.textarea{
+margin-left:20px;
+}
+ #options, #myPokemonAttackArray, #myPokemonArray, #items{
    position:relative;
    margin-top:15px;
    /*top:87%;

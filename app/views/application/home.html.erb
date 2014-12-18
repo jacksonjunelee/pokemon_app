@@ -36,7 +36,7 @@ var gameStart= function(){
 
 var loadGameDiv = function() {
 
-  var gameDiv = $('<div>').attr('id','gameConsole').css({"width":"400px","height":"500px","background-color":"red"});
+  var gameDiv = $('<div>').attr('id','gameConsole').css({"width":"400px","height":"500px",});
 
   var myName = $('<label>').addClass('username').attr('id','username')
   var myPokemonName = $('<label>').addClass('me').attr('id','myPokemonName');
@@ -102,6 +102,8 @@ var loadGameSwitch = function(){
   }
 
   $('div#options').replaceWith(allMyPokemonDiv);
+  // $(allMyPokemonDiv).on('mouseenter','button.pokemonSwitch',makeModalSwitch);
+  // $(allMyPokemonDiv).on('mouseleave','button.pokemonSwitch',removeModalSwitch);
   $(allMyPokemonDiv).on('click','button.pokemonB',gameSwitch);
 }
 
@@ -113,6 +115,8 @@ var loadGameAttack = function(){
   }
 
   $('div#options').replaceWith(myPokemonAttackDiv);
+  $(myPokemonAttackDiv).on('mouseenter','button.pokemonAttack',makeModalAttack);
+  $(myPokemonAttackDiv).on('mouseleave','button.pokemonAttack',removeModalAttack);
   $(myPokemonAttackDiv).on('click','button.pokemonAttack',gameAttack);
 
 }
@@ -130,7 +134,7 @@ var gameAttack = function(){
 }
 
 var loadItem = function(){
-  var ItemDiv = $('<div>').attr('id','items').css({"width":"90%","height":"20%",});
+  var ItemDiv = $('<div>').attr('id','items').css({"width":"90%","height":"20%"});
   var catchButton = $('<button>').addClass('catch').attr('id', 'catchPokemon').text('Catch');
 
   ItemDiv.append(catchButton);
@@ -143,6 +147,22 @@ var gameCatch = function(){
   game.stage[0].catch();
   $('div#items').hide();
   loadOptionDiv($('div#gameConsole'));
+}
+
+var makeModalAttack = function(){
+  var modal = $('<div>').attr('id','modal');
+  var name = $('<label>').addClass('modalAttack').text('Move Name: ' + game.pokemonOutMoves[this.id].name);
+  var power = $('<label>').addClass('modalAttack').text('\nPower: ' + game.pokemonOutMoves[this.id].power);
+  var pp = $('<label>').addClass('modalAttack').text('\nPP: ' + game.pokemonOutMoves[this.id].pp);
+  var accuracy = $('<label>').addClass('modalAttack').text('\nAccuracy: ' + game.pokemonOutMoves[this.id].accuracy);
+  var description = $('<label>').addClass('modalAttack').text('\nDescription: ' + game.pokemonOutMoves[this.id].description);
+  modal.append(name).append(power).append(pp).append(accuracy).append(description);
+  modal.appendTo('div#gameConsole');
+  modal.show();
+}
+
+var removeModalAttack = function(){
+  $('div#modal').hide()
 
 }
 
