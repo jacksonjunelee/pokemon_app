@@ -6,12 +6,13 @@ var Me = function(id){
   $.get('/trainers/' + id +'.json').done(function(data){
           me.username = data[0].username;
           me.pokemons = data[1];
-
+          for (var i = 0; i < data[1].length; i++){
+                me.pokemons[i].faint = false;
+              }
           // for (var i = 0; i < me.pokemons.length; i++){
           //   var integer = i;
             $.get('/pokemons/'+ me.pokemons[0].api_ref + '/pokemon/fetch').done(function(data){
                 me.pokemons[0].randomMoves = [];
-                me.pokemons[0].faint = false;
               for (var i =0; i < 4; i++){
                 var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
                 me.pokemons[0].randomMoves.push(random);
@@ -41,11 +42,12 @@ Me.prototype.pokeswitch = function(index){
 Me.prototype.catch = function(){
   // add if statement with MAth.random, var chances
   // nickname
-  // var position;
-  // for (var i = 0; i < game.stage[0].pokemons.length; i++){
-  //
-  // }
 
+  var takenPosition = game.stage[0].pokemons.map(function(num){
+    return num.position;
+  }).sort().pop();
+  var position = takenPosition + 1;
+  
   var catchPokemon = {
     pokemon: {
       name: game.stage[1].name,

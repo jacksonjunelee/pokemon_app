@@ -12,6 +12,8 @@ function Pokemon(id){
       pokemon.name = data[0].name;
       $('#pokeName').text(pokemon.name);
       $('#pokeHp').text('Hp:' + pokemon.hp);
+      $('#opponentHealth').val(pokemon.hp).attr('max',pokemon.hp);
+
     for (var i =0; i < 4; i++){
       var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
       pokemon.moves.push(random);

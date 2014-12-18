@@ -47,32 +47,24 @@ var loadGameDiv = function() {
   var pokemonName= $('<label>').addClass('pokeOpponent').attr('id','pokeName');
   var pokemonImageTag = $('<img>').addClass('pokeOpponent').attr('id','pokeImg');
   var pokemonHp = $('<label>').addClass('pokeOpponent').attr('id','pokeHp');
+  var pokemonProgressBar = $('<progress>').attr('id','opponentHealth');
 
-  var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent');
-  var myPokemonDiv = $('<div>').attr('id','myPokemonOut').css({"width":"10%","height":"20%",});
+  var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent').css({"width":"50%","height":"15%"});
+  var myPokemonDiv = $('<div>').attr('id','myPokemonOut').css({"width":"10%","height":"20%"});
+  var myPokemonProgressBar = $('<progress>').attr('id','myHealth');
 
   // opponent pokemon is put on div
-  pokemonName.appendTo(pokemonOpponentDiv);
-  pokemonImageTag.appendTo(pokemonOpponentDiv);
-  pokemonHp.appendTo(pokemonOpponentDiv);
-
+(pokemonOpponentDiv).append(pokemonName).append(pokemonImageTag).append(pokemonHp).append(pokemonProgressBar);
 
   // Me and my Pokemon are put on Div
-  myName.appendTo(myPokemonDiv);
-  myPokemonName.appendTo(myPokemonDiv);
-  myPokemonImageTag.appendTo(myPokemonDiv);
-  myPokemonImageHp.appendTo(myPokemonDiv);
+  (myPokemonDiv).append(myName).append(myPokemonName).append(myPokemonImageTag).append(myPokemonImageHp).append(myPokemonProgressBar);
 
   // All Divs put on the body
-  pokemonOpponentDiv.appendTo(gameDiv);
-  // text Console on the body
-  textConsole.appendTo(gameDiv);
-  myPokemonDiv.appendTo(gameDiv);
+  (gameDiv).append(pokemonOpponentDiv).append(textConsole).append(myPokemonDiv);
+  // renders User Options and appends it to the game Div
   loadOptionDiv(gameDiv);
 
   gameDiv.appendTo('body');
-
-
 }
 
 var loadOptionDiv = function(gameDiv){

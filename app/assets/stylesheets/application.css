@@ -43,7 +43,7 @@
 #gameConsole{
   padding: 5px 5px;
   border: 35px solid transparent;
-  border-bottom: 100px solid transparent;
+  border-bottom: 160px solid transparent;
   /*border-color:black;*/
   border-image:url("/assets/border.png") 90 25 stretch;
   /*text-align:center;*/
@@ -54,13 +54,16 @@ margin-left:20px;
 }
  #options, #myPokemonAttackArray, #myPokemonArray, #items{
    position:relative;
-   margin-top:15px;
+   margin-top:40px;
    /*top:87%;
    left:24%;*/
  }
 
  .textarea{
    margin-top:20px;
+ }
+
+ #pokemonOpponent{
  }
 
  #myPokemonOut{

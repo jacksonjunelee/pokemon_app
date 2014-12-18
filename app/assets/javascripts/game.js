@@ -5,13 +5,15 @@ var game = {
   pokemonOut:[],
   pokemonOutMoves:[],
   start: function(randomPokemon){
-          for (var i=0; i< game.stage[0].pokemons.length; i++){
-            if (this.stage[0].pokemons[i].faint == false){
-              this.pokemonOut = this.stage[0].pokemons[i];
-              this.assign();
-            }
-          }
+          // for (var i=0; i< game.stage[0].pokemons.length; i++){
+          //   if (this.stage[0].pokemons[i].faint === false){
+          //     if (this.pokemonOut.length === 1) { break }
+          //     this.pokemonOut = this.stage[0].pokemons[i];
+          //     this.assign();
+          //   }
+          // }
           this.pokemonOut = this.stage[0].pokemons[0];
+          this.assign();
           var pokemon = new Pokemon(randomPokemon);
           this.stage.splice(1,1,pokemon);
   },
@@ -29,6 +31,7 @@ var game = {
           $('#myPokemonName').text("\n" + this.pokemonOut.name + "\n" + this.pokemonOut.nickname);
           $('#myPokemonHp').text('Hp:' + this.pokemonOut.hp);
           $('#myPokemon').attr('src', this.pokemonOut.battle_img);
+          $('#myHealth').val(this.pokemonOut.hp).attr('max',this.pokemonOut.max_hp);
 
   },
   checkFirstMove: function() {
@@ -47,7 +50,8 @@ var game = {
         $('.textarea').append("\n"+ this.pokemonOut.name + " used " + this.pokemonOutMoves[id].name).animate({scrollTop: 600});
         $('.textarea').append("\n"+ this.pokemonOut.name + " deals " + Math.round(this.pokemonOutMoves[id].power/3) + " damage").animate({scrollTop: 600});
         this.hpRender();
-        console.log(Math.round(this.pokemonOutMoves[id].power/3));
+        var health = document.getElementById("opponentHealth");
+        health.value = this.stage[1].hp;
         this.checkFaint();
         this.currentAttacker = this.stage[1];
         if (this.stage[1].faint === false){
@@ -57,7 +61,7 @@ var game = {
 
       else {
         $('.textarea').append("\nEnemy speed is higher; Enemy attacks").animate({scrollTop: 600});
-            this.enemyAttack();
+        this.enemyAttack();
         // var hpCut = pokemonOut.hp -  random;
       }
   },
@@ -68,10 +72,12 @@ var game = {
     $.get('http://www.pokeapi.co' + random.resource_uri).done(function(data){
       myPoke.pokemonOut.hp -= Math.round(data.power/3);
       myPoke.hpRender();
-      myPoke.currentAttacker = myPoke.pokemonOut;
       $('.textarea').append("\nEnemy pokemon attacks").animate({scrollTop: 600});
       $('.textarea').append("\nEnemy " + myPoke.stage[1].name + " used " + data.name).animate({scrollTop: 600});
       $('.textarea').append("\nEnemy " + myPoke.stage[1].name + " deals " + Math.round(data.power/3) + " damage").animate({scrollTop: 600});
+      var health = document.getElementById("myHealth");
+      health.value = myPoke.pokemonOut.hp;
+      myPoke.currentAttacker = myPoke.pokemonOut;
       myPoke.checkFaint();
       myPoke.checkSwitch();
     });
