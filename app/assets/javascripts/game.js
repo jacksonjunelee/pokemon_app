@@ -5,18 +5,21 @@ var game = {
   pokemonOut:[],
   pokemonOutMoves:[],
   start: function(randomPokemon){
+          // for (var i=0; i< game.stage[0].pokemons.length; i++){
+          //   if (this.stage[0].pokemons[i].faint === false){
+          //     if (this.pokemonOut.length === 1) { break }
+          //     this.pokemonOut = this.stage[0].pokemons[i];
+          //     this.assign();
+          //   }
+          // }
           this.pokemonOut = this.stage[0].pokemons[0];
+          this.assign();
           var pokemon = new Pokemon(randomPokemon);
           this.stage.splice(1,1,pokemon);
   },
   assign: function(){
           var outmoves = [];
           for (var i = 0; i < 4; i++){
-            // for (var j=0; j< game.stage[0].pokemons.length; j++){
-            //   if (this.stage[0].pokemons[j].faint == false){
-            //     this.pokemonOut = this.stage[0].pokemons[j];
-            //   }
-            // }
             var move = this.pokemonOut.randomMoves[i].resource_uri;
             $.get('http://www.pokeapi.co' + move).done(function(data){
               outmoves.push(data);
@@ -28,6 +31,7 @@ var game = {
           $('#myPokemonName').text("\n" + this.pokemonOut.name + "\n" + this.pokemonOut.nickname);
           $('#myPokemonHp').text('Hp:' + this.pokemonOut.hp);
           $('#myPokemon').attr('src', this.pokemonOut.battle_img);
+          $('#myHealth').val(this.pokemonOut.hp).attr('max',this.pokemonOut.max_hp);
 
   },
   checkFirstMove: function() {
@@ -40,23 +44,29 @@ var game = {
   },
 
   attackPhase:function(id){
+      // User pokemon attacks if it is currentAttacker
       if (this.currentAttacker === this.pokemonOut){
         this.stage[1].hp -= Math.round(this.pokemonOutMoves[id].power/3);
-        $('.textarea').append("\n"+ this.pokemonOut.name + " attacks").animate({scrollTop: 600});
-        $('.textarea').append("\n"+ this.pokemonOut.name + " used " + this.pokemonOutMoves[id].name).animate({scrollTop: 600});
-        $('.textarea').append("\n"+ this.pokemonOut.name + " deals " + Math.round(this.pokemonOutMoves[id].power/3) + " damage").animate({scrollTop: 600});
+        // puts attack,hp,damage information to text area
+        $('.textarea').append("\n"+ this.pokemonOut.name + " attacks").animate({scrollTop: 600}).append("\n"+ this.pokemonOut.name + " used " + this.pokemonOutMoves[id].name).animate({scrollTop: 600}).append("\n"+ this.pokemonOut.name + " deals " + Math.round(this.pokemonOutMoves[id].power/3) + " damage").animate({scrollTop: 600});
+        // renders hp bar
         this.hpRender();
-        console.log(Math.round(this.pokemonOutMoves[id].power/3));
+        var health = document.getElementById("opponentHealth");
+        health.value = this.stage[1].hp;
+        // check pokemon faint
         this.checkFaint();
         this.currentAttacker = this.stage[1];
-        if (this.stage[1].faint === false){
-          this.enemyAttack();
+        if ($('div#gameConsole').is(':visible')){
+          // this.enemyAttack();
+          setTimeout(function(){
+            game.enemyAttack();
+          },1500);
         }
       }
 
       else {
         $('.textarea').append("\nEnemy speed is higher; Enemy attacks").animate({scrollTop: 600});
-            this.enemyAttack();
+        this.enemyAttack();
         // var hpCut = pokemonOut.hp -  random;
       }
   },
@@ -67,10 +77,12 @@ var game = {
     $.get('http://www.pokeapi.co' + random.resource_uri).done(function(data){
       myPoke.pokemonOut.hp -= Math.round(data.power/3);
       myPoke.hpRender();
-      myPoke.currentAttacker = myPoke.pokemonOut;
       $('.textarea').append("\nEnemy pokemon attacks").animate({scrollTop: 600});
       $('.textarea').append("\nEnemy " + myPoke.stage[1].name + " used " + data.name).animate({scrollTop: 600});
       $('.textarea').append("\nEnemy " + myPoke.stage[1].name + " deals " + Math.round(data.power/3) + " damage").animate({scrollTop: 600});
+      var health = document.getElementById("myHealth");
+      health.value = myPoke.pokemonOut.hp;
+      myPoke.currentAttacker = myPoke.pokemonOut;
       myPoke.checkFaint();
       myPoke.checkSwitch();
     });

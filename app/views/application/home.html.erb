@@ -1,37 +1,49 @@
-<div id="map-canvas" style="width: 400px;height: 500px;"></div>
+<!-- <div id="map-canvas" style="width: 400px;height: 500px;"></div> -->
 
 <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
 
 <input type="filepicker" data-fp-apikey="<%= ENV["FILEPICKER_POKEMON"] %>" data-fp-mimetypes="*/*" data-fp-container="modal" onchange="alert(event.fpfile.url)">
 
 <script>
+
 $(function(){
   var me = new Me(1);
   game.stage.push(me);
 
-// var map = $('<div>').attr('id','map-canvas').css({"width":"900px","height":"900px"});
-// $('body').appendTo(map);
+var map = $('<div>').attr('id','map-canvas').css({"width":"400px","height":"500px"});
+$('body').append(map);
+
+var restartButton = $('<button>').attr('id','restart').text('Restart Game');
+$('body').append(restartButton);
+$('button#restart').on('click',restartGame);
+
 });
 
 var gameStart= function(){
   if (!$('div#gameConsole').is(':visible')){
     loadGameDiv();
   }
+
   game.start(this.pokemon);
-  game.assign();
   game.checkFirstMove();
 
-  deleteLocation = locations.splice(this.index,1);
+  var deleteLocation = locations.splice(this.index,1);
+  var key = deleteLocation[0][0];
+  localStorage.setItem(key,JSON.stringify(deleteLocation[0]));
+  // var c = JSON.parse(deletedLocations);
+
   console.log(locations);
-  // indexes = $.map(list, function(obj, index) {
-  //   if(obj.prop2 == "yutu") {
-  //     return index;
-  //   }
-  // })
-  //
-  // firstIndex = indexes[0]
+  console.log(deleteLocation);
+
   this.setMap(null);
   }
+
+var restartGame = function(){
+  for (var deleteMarkers in localStorage){
+    localStorage.removeItem(deleteMarkers);
+    location.reload();
+  }
+}
 
 
 var loadGameDiv = function() {
@@ -48,32 +60,24 @@ var loadGameDiv = function() {
   var pokemonName= $('<label>').addClass('pokeOpponent').attr('id','pokeName');
   var pokemonImageTag = $('<img>').addClass('pokeOpponent').attr('id','pokeImg');
   var pokemonHp = $('<label>').addClass('pokeOpponent').attr('id','pokeHp');
+  var pokemonProgressBar = $('<progress>').attr('id','opponentHealth');
 
-  var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent');
-  var myPokemonDiv = $('<div>').attr('id','myPokemonOut').css({"width":"10%","height":"20%",});
+  var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent').css({"width":"50%","height":"15%"});
+  var myPokemonDiv = $('<div>').attr('id','myPokemonOut').css({"width":"10%","height":"20%"});
+  var myPokemonProgressBar = $('<progress>').attr('id','myHealth');
 
   // opponent pokemon is put on div
-  pokemonName.appendTo(pokemonOpponentDiv);
-  pokemonImageTag.appendTo(pokemonOpponentDiv);
-  pokemonHp.appendTo(pokemonOpponentDiv);
-
+(pokemonOpponentDiv).append(pokemonName).append(pokemonImageTag).append(pokemonHp).append(pokemonProgressBar);
 
   // Me and my Pokemon are put on Div
-  myName.appendTo(myPokemonDiv);
-  myPokemonName.appendTo(myPokemonDiv);
-  myPokemonImageTag.appendTo(myPokemonDiv);
-  myPokemonImageHp.appendTo(myPokemonDiv);
+  (myPokemonDiv).append(myName).append(myPokemonName).append(myPokemonImageTag).append(myPokemonImageHp).append(myPokemonProgressBar);
 
   // All Divs put on the body
-  pokemonOpponentDiv.appendTo(gameDiv);
-  // text Console on the body
-  textConsole.appendTo(gameDiv);
-  myPokemonDiv.appendTo(gameDiv);
+  (gameDiv).append(pokemonOpponentDiv).append(textConsole).append(myPokemonDiv);
+  // renders User Options and appends it to the game Div
   loadOptionDiv(gameDiv);
 
   gameDiv.appendTo('body');
-
-
 }
 
 var loadOptionDiv = function(gameDiv){
@@ -102,8 +106,8 @@ var loadGameSwitch = function(){
   }
 
   $('div#options').replaceWith(allMyPokemonDiv);
-  // $(allMyPokemonDiv).on('mouseenter','button.pokemonSwitch',makeModalSwitch);
-  // $(allMyPokemonDiv).on('mouseleave','button.pokemonSwitch',removeModalSwitch);
+  $(allMyPokemonDiv).on('mouseenter','button.pokemonB',makeModalSwitch);
+  $(allMyPokemonDiv).on('mouseleave','button.pokemonB',removeModalSwitch);
   $(allMyPokemonDiv).on('click','button.pokemonB',gameSwitch);
 }
 
@@ -151,11 +155,11 @@ var gameCatch = function(){
 
 var makeModalAttack = function(){
   var modal = $('<div>').attr('id','modal');
-  var name = $('<label>').addClass('modalAttack').text('Move Name: ' + game.pokemonOutMoves[this.id].name);
-  var power = $('<label>').addClass('modalAttack').text('\nPower: ' + game.pokemonOutMoves[this.id].power);
-  var pp = $('<label>').addClass('modalAttack').text('\nPP: ' + game.pokemonOutMoves[this.id].pp);
-  var accuracy = $('<label>').addClass('modalAttack').text('\nAccuracy: ' + game.pokemonOutMoves[this.id].accuracy);
-  var description = $('<label>').addClass('modalAttack').text('\nDescription: ' + game.pokemonOutMoves[this.id].description);
+  var name = $('<p>').addClass('modalAttack').text('Move Name: ' + game.pokemonOutMoves[this.id].name);
+  var power = $('<p>').addClass('modalAttack').text('\nPower: ' + game.pokemonOutMoves[this.id].power);
+  var pp = $('<p>').addClass('modalAttack').text('\nPP: ' + game.pokemonOutMoves[this.id].pp);
+  var accuracy = $('<p>').addClass('modalAttack').text('\nAccuracy: ' + game.pokemonOutMoves[this.id].accuracy);
+  var description = $('<p>').addClass('modalAttack').text('\nDescription: ' + game.pokemonOutMoves[this.id].description);
   modal.append(name).append(power).append(pp).append(accuracy).append(description);
   modal.appendTo('div#gameConsole');
   modal.show();
@@ -163,7 +167,23 @@ var makeModalAttack = function(){
 
 var removeModalAttack = function(){
   $('div#modal').hide()
+}
 
+var makeModalSwitch = function(){
+  var modal = $('<div>').attr('id','modal');
+    var name = $('<p>').addClass('modalSwitch').text('Name: ' + game.stage[0].pokemons[this.id].name);
+    var nickname = $('<p>').addClass('modalSwitch').text('Nickname: ' + game.stage[0].pokemons[this.id].nickname);
+    var hp = $('<p>').addClass('modalSwitch').text('Hp: ' + game.stage[0].pokemons[this.id].hp);
+    var speed = $('<p>').addClass('modalSwitch').text('Speed: ' + game.stage[0].pokemons[this.id].speed);
+
+  modal.append(name).append(nickname).append(hp).append(speed);
+
+  modal.appendTo('div#gameConsole');
+  modal.show();
+}
+
+var removeModalSwitch = function(){
+  $('div#modal').hide()
 }
 
 </script>

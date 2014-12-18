@@ -3,15 +3,19 @@ function Pokemon(id){
   this.name;
   this.nickname;
   this.hp;
+  this.max_hp;
   this.faint = false;
   this.moves = [];
   var pokemon = this;
    $.get('/pokemons/' + id + '/pokemon/fetch').done(function(data){
       pokemon.speed = data[0].speed;
       pokemon.hp = data[0].hp;
+      pokemon.max_hp = data[0].hp;
       pokemon.name = data[0].name;
       $('#pokeName').text(pokemon.name);
       $('#pokeHp').text('Hp:' + pokemon.hp);
+      $('#opponentHealth').val(pokemon.hp).attr('max',pokemon.hp);
+
     for (var i =0; i < 4; i++){
       var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
       pokemon.moves.push(random);

@@ -31,27 +31,39 @@
   }
 
 .modalAttack{
-  padding-top:5px;
-}
-#gameConsole{
-  padding: 5px 5px;
-  border: 5px solid transparent;
-  /*border-color:black;*/
-  border-image:url("/assets/313284-gbcolor (purple).png") 500 500 stretch;
+  padding: 0;
+  margin: 0;
 }
 
-.textarea{
-margin-left:20px;
+.modalSwitch{
+  padding:0;
+  margin:0;
 }
+
+#gameConsole{
+  padding: 5px 5px;
+  border: 35px solid transparent;
+  border-bottom: 160px solid transparent;
+  /*border-color:black;*/
+  -moz-border-image:url("/assets/border.png") 90 25 stretch; /* Old Firefox */
+  -webkit-border-image:url("/assets/border.png") 90 25 stretch; /* Safari */
+  -o-border-image:url("/assets/border.png") 90 25 stretch; /* Opera */
+  border-image:url("/assets/border.png") 90 25 stretch;
+  /*text-align:center;*/
+}
+
  #options, #myPokemonAttackArray, #myPokemonArray, #items{
    position:relative;
-   margin-top:15px;
+   margin-top:40px;
    /*top:87%;
    left:24%;*/
  }
 
  .textarea{
-   margin-top:20px;
+   margin-top:37px;
+ }
+
+ #pokemonOpponent{
  }
 
  #myPokemonOut{

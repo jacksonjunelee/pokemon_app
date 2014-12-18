@@ -23,6 +23,15 @@ var locations = [
 ['Maroubra Beach', -33.950198, 151.259302, 1, 4,4,"/assets/pokemon-main-sprites/yellow/4.png"]
 ];
 
+for (var deleteMarkers in localStorage){
+  for (var i =0; i < locations.length; i++){
+    if (deleteMarkers === locations[i][0]){
+      var index = locations.indexOf(locations[i]);
+      locations.splice(index,1);
+    }
+  }
+}
+
 function setMarkers(map, locations) {
   // Add markers to the map
 

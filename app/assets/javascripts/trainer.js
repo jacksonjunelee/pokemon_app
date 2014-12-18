@@ -6,7 +6,9 @@ var Me = function(id){
   $.get('/trainers/' + id +'.json').done(function(data){
           me.username = data[0].username;
           me.pokemons = data[1];
-
+          for (var i = 0; i < data[1].length; i++){
+                me.pokemons[i].faint = false;
+              }
           // for (var i = 0; i < me.pokemons.length; i++){
           //   var integer = i;
             $.get('/pokemons/'+ me.pokemons[0].api_ref + '/pokemon/fetch').done(function(data){
@@ -38,9 +40,14 @@ Me.prototype.pokeswitch = function(index){
 
 
 Me.prototype.catch = function(){
-  console.log(game.stage[1]);
   // add if statement with MAth.random, var chances
   // nickname
+
+  var takenPosition = game.stage[0].pokemons.map(function(num){
+    return num.position;
+  }).sort().pop();
+  var position = takenPosition + 1;
+
   var catchPokemon = {
     pokemon: {
       name: game.stage[1].name,
@@ -48,9 +55,12 @@ Me.prototype.catch = function(){
       hp: game.stage[1].hp,
       speed: game.stage[1].speed,
       trainer_id: this.id,
+      position: position,
+      max_hp: game.stage[1].max_hp,
       battle_img: "/assets/pokemon-main-sprites/yellow/back/" + game.stage[1].id + ".png"
     }
   };
+  game.stage[0].pokemons.push(catchPokemon.pokemon);
     // game.stage.pokemons.push(catchPokemon.pokemon);
   $.post('/pokemons', catchPokemon).done(function(){
     $('#gameConsole').remove();
