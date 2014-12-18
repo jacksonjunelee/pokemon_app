@@ -11,6 +11,7 @@ var Me = function(id){
           //   var integer = i;
             $.get('/pokemons/'+ me.pokemons[0].api_ref + '/pokemon/fetch').done(function(data){
                 me.pokemons[0].randomMoves = [];
+                me.pokemons[0].faint = false;
               for (var i =0; i < 4; i++){
                 var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
                 me.pokemons[0].randomMoves.push(random);
@@ -38,9 +39,13 @@ Me.prototype.pokeswitch = function(index){
 
 
 Me.prototype.catch = function(){
-  console.log(game.stage[1]);
   // add if statement with MAth.random, var chances
   // nickname
+  // var position;
+  // for (var i = 0; i < game.stage[0].pokemons.length; i++){
+  //
+  // }
+
   var catchPokemon = {
     pokemon: {
       name: game.stage[1].name,
@@ -51,6 +56,7 @@ Me.prototype.catch = function(){
       battle_img: "/assets/pokemon-main-sprites/yellow/back/" + game.stage[1].id + ".png"
     }
   };
+  game.stage[0].pokemons.push(catchPokemon.pokemon);
     // game.stage.pokemons.push(catchPokemon.pokemon);
   $.post('/pokemons', catchPokemon).done(function(){
     $('#gameConsole').remove();

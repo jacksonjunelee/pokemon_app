@@ -31,13 +31,22 @@
   }
 
 .modalAttack{
-  padding-top:5px;
+  padding: 0;
+  margin: 0;
 }
+
+.modalSwitch{
+  padding:0;
+  margin:0;
+}
+
 #gameConsole{
   padding: 5px 5px;
-  border: 5px solid transparent;
+  border: 35px solid transparent;
+  border-bottom: 100px solid transparent;
   /*border-color:black;*/
-  border-image:url("/assets/313284-gbcolor (purple).png") 500 500 stretch;
+  border-image:url("/assets/border.png") 90 25 stretch;
+  /*text-align:center;*/
 }
 
 .textarea{

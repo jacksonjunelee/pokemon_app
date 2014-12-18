@@ -5,6 +5,12 @@ var game = {
   pokemonOut:[],
   pokemonOutMoves:[],
   start: function(randomPokemon){
+          for (var i=0; i< game.stage[0].pokemons.length; i++){
+            if (this.stage[0].pokemons[i].faint == false){
+              this.pokemonOut = this.stage[0].pokemons[i];
+              this.assign();
+            }
+          }
           this.pokemonOut = this.stage[0].pokemons[0];
           var pokemon = new Pokemon(randomPokemon);
           this.stage.splice(1,1,pokemon);
@@ -12,11 +18,6 @@ var game = {
   assign: function(){
           var outmoves = [];
           for (var i = 0; i < 4; i++){
-            // for (var j=0; j< game.stage[0].pokemons.length; j++){
-            //   if (this.stage[0].pokemons[j].faint == false){
-            //     this.pokemonOut = this.stage[0].pokemons[j];
-            //   }
-            // }
             var move = this.pokemonOut.randomMoves[i].resource_uri;
             $.get('http://www.pokeapi.co' + move).done(function(data){
               outmoves.push(data);
