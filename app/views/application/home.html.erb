@@ -5,13 +5,18 @@
 <input type="filepicker" data-fp-apikey="<%= ENV["FILEPICKER_POKEMON"] %>" data-fp-mimetypes="*/*" data-fp-container="modal" onchange="alert(event.fpfile.url)">
 
 <script>
+
 $(function(){
   var me = new Me(1);
   game.stage.push(me);
-  // $.cookie('deleteMarker', 'deleteLocation');
 
 var map = $('<div>').attr('id','map-canvas').css({"width":"400px","height":"500px"});
 $('body').append(map);
+
+var restartButton = $('<button>').attr('id','restart').text('Restart Game');
+$('body').append(restartButton);
+$('button#restart').on('click',restartGame);
+
 });
 
 var gameStart= function(){
@@ -23,10 +28,22 @@ var gameStart= function(){
   game.checkFirstMove();
 
   var deleteLocation = locations.splice(this.index,1);
+  var key = deleteLocation[0][0];
+  localStorage.setItem(key,JSON.stringify(deleteLocation[0]));
+  // var c = JSON.parse(deletedLocations);
+
   console.log(locations);
   console.log(deleteLocation);
+
   this.setMap(null);
   }
+
+var restartGame = function(){
+  for (var deleteMarkers in localStorage){
+    localStorage.removeItem(deleteMarkers);
+    location.reload();
+  }
+}
 
 
 var loadGameDiv = function() {
