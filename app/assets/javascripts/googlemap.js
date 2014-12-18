@@ -1,6 +1,6 @@
 function initialize() {
   var mapOptions = {
-    zoom: 10,
+    zoom: 11,
     center: new google.maps.LatLng(-33.9, 151.2)
   };
   var map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -49,7 +49,7 @@ function setMarkers(map, locations) {
   // coordinate closes the poly by connecting to the first
   // coordinate.
   var shape = {
-    coords: [0, 0, 60, 0, 60, 60, 0 , 60],
+    coords: [0, 0, 80, 0, 80, 80, 0 , 80],
     type: 'poly'
   };
   for (var i = 0; i < locations.length; i++) {
@@ -63,7 +63,7 @@ function setMarkers(map, locations) {
       icon: {
         url: location[6],
         // This marker is 20 pixels wide by 32 pixels tall.
-        size: new google.maps.Size(60, 60),
+        size: new google.maps.Size(80, 80),
         // The origin for this image is 0,0.
         origin: new google.maps.Point(0,0),
         // The anchor for this image is the base of the flagpole at 0,32.
@@ -94,5 +94,3 @@ function setMarkers(map, locations) {
   //   }
   // });
 }
-
-google.maps.event.addDomListener(window, 'load', initialize);

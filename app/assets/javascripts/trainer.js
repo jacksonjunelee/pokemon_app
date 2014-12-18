@@ -61,7 +61,7 @@ Me.prototype.catch = function(){
     }
   };
   game.stage[0].pokemons.push(catchPokemon.pokemon);
-    // game.stage.pokemons.push(catchPokemon.pokemon);
+
   $.post('/pokemons', catchPokemon).done(function(){
     $('#gameConsole').remove();
   });
