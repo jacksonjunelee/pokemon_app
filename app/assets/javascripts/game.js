@@ -30,7 +30,8 @@ var game = {
           $('#username').text(this.stage[0].username);
           $('#myPokemonName').text("\n" + this.pokemonOut.name + "\n" + this.pokemonOut.nickname);
           $('#myPokemonHp').text('Hp:' + this.pokemonOut.hp);
-          $('#myPokemon').attr('src', this.pokemonOut.battle_img);
+          console.log(window.location.origin)
+          $('#myPokemon').attr('src', window.location.origin + '/image/' + this.pokemonOut.api_ref);
           $('#myHealth').val(this.pokemonOut.hp).attr('max',this.pokemonOut.max_hp);
 
   },

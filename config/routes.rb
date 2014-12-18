@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'image/:id' => 'pokemons#image'
   get 'sessions/new' => 'sessions#new', as: 'login'
   post 'sessions'    => 'sessions#create'
   delete 'sessions'  => 'sessions#destroy'
