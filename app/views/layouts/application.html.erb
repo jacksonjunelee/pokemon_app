@@ -8,11 +8,8 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <script src='//code.jquery.com/jquery-2.1.1.min.js'></script>
   <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=" + "<%= ENV["GOOGLE_MAP"] %>"></script>
-  <%= javascript_include_tag 'googlemap', 'data-turbolinks-track' => true %>
-  <!-- <%= javascript_include_tag 'pokemon', 'data-turbolinks-track' => true %> -->
-  <!-- <%= javascript_include_tag 'trainer', 'data-turbolinks-track' => true %> -->
+
 
 </head>
 <body>
