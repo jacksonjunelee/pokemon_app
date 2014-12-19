@@ -73,7 +73,9 @@ function setMarkers(map, locations) {
       zIndex: location[3]
     });
 
-    google.maps.event.addListener(marker,'click',gameStart);
+    if (!$('div#gameConsole').is(':visible')){
+      google.maps.event.addListener(marker,'click',gameStart);
+    }
   }
   // google.maps.event.addListener(map, 'zoom_changed', function() {
   //   zoomLevel = map.getZoom();
