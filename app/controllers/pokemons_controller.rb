@@ -28,7 +28,7 @@ class PokemonsController < ApplicationController
   end
 
   def fetch
-    @pokemons = HTTParty.get('http://www.pokeapi.co/api/v1/' + params[:type] + '/' + params[:id])
+    @pokemons = HTTParty.get('//www.pokeapi.co/api/v1/' + params[:type] + '/' + params[:id])
     @image_link = ActionController::Base.helpers.image_path("#{params[:id]}.png")
     render json: [@pokemons,@image_link]
   end
