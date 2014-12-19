@@ -9,15 +9,6 @@ var Me = function(id){
           for (var i = 0; i < data[1].length; i++){
                 me.pokemons[i].faint = false;
               }
-          // for (var i = 0; i < me.pokemons.length; i++){
-          //   var integer = i;
-            $.get('/pokemons/'+ me.pokemons[0].api_ref + '/pokemon/fetch').done(function(data){
-                me.pokemons[0].randomMoves = [];
-              for (var i =0; i < 4; i++){
-                var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
-                me.pokemons[0].randomMoves.push(random);
-              }
-            });
       });
 };
 
@@ -25,17 +16,25 @@ Me.prototype.pokeswitch = function(index){
   // this.pokemons[index];
   game.pokemonOut = game.stage[0].pokemons[index];
   $('.textarea').append("\n" + game.stage[0].username + " sends out " + game.pokemonOut.name).animate({scrollTop: 600});
-    // if (game.pokemonOut.randomMoves === []){
-    game.pokemonOut.randomMoves = [];
-    $.get('/pokemons/'+ game.pokemonOut.api_ref + '/pokemon/fetch').done(function(data){
-      for (var i =0; i < 4; i++){
-        var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
-        game.pokemonOut.randomMoves.push(random);
-      }
-    game.assign();
+
+  // Give random Moves
+  $.get('/pokemons/'+ game.pokemonOut.api_ref + '/pokemon/fetch').done(function(data){
+    for (var i =0; i < 4; i++){
+      var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
+      var move = random.resource_uri;
+      $.get('http://www.pokeapi.co' + move).done(function(move_data){
+        game.pokemonOutMoves.push(move_data);
+      });
+    }
+  });
+
+$('#username').text(game.stage[0].username);
+$('#myPokemonName').text("\n" + game.pokemonOut.name + "\n" + game.pokemonOut.nickname);
+$('#myPokemonHp').text('Hp:' + game.pokemonOut.hp);
+$('#myPokemon').attr('src', window.location.origin + '/image/' + game.pokemonOut.api_ref);
+$('#myHealth').val(game.pokemonOut.hp).attr('max',game.pokemonOut.max_hp);
     game.checkFirstMove();
-    });
-  // }
+
 };
 
 

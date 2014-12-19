@@ -1,3 +1,5 @@
+var goBack = $('<button>').attr('id','undo').text("Go Back").click(undo);
+
 $(function(){
   var me = new Me(1);
   game.stage.push(me);
@@ -5,12 +7,11 @@ $(function(){
   var map = $('<div>').attr('id','map-canvas').css({"width":"400px","height":"500px"});
   $('body').append(map);
 
-  var restartButton = $('<button>').attr('id','restart').text('Restart Game');
+  var restartButton = $('<button>').attr('id','restart').text('Restart Game').click(restartGame);
   $('body').append(restartButton);
-  $('button#restart').on('click',restartGame);
 
   if (localStorage.length === 5){
-    $('body').prepend($('<p>').attr('id',"won").text("No More Pokemon").css({"font-size":"300%"}));
+    $('body').prepend($('<p>').attr('id',"won").text("No More Pokemon ").css({"font-size":"300%"}));
   }
 
   initialize();
@@ -32,41 +33,35 @@ var gameStart= function(){
     }
   }
   localStorage.setItem(key,JSON.stringify(deleteLocation));
-  // console.log(key);
-  // var c = JSON.parse(deletedLocations);
-
-  // console.log(locations);
-  // console.log(deleteLocation);
 
   this.setMap(null);
-}
+};
 
 var restartGame = function(){
   for (var deleteMarkers in localStorage){
     localStorage.removeItem(deleteMarkers);
     location.reload();
   }
-}
+};
 
 
 var loadGameDiv = function() {
 
   var gameDiv = $('<div>').attr('id','gameConsole').css({"width":"400px","height":"500px",});
 
-  var myName = $('<label>').addClass('username').attr('id','username')
-  var myPokemonName = $('<label>').addClass('me').attr('id','myPokemonName');
-  var myPokemonImageTag = $('<img>').addClass('me').attr('id','myPokemon');
-  var myPokemonImageHp = $('<label>').addClass('me').attr('id','myPokemonHp');
-
-  var textConsole = $('<textarea>').addClass('textarea').css({"width": "80%", "height": "35%"});
-
+  var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent').css({"width":"60%","height":"15%"});
   var pokemonName= $('<label>').addClass('pokeOpponent').attr('id','pokeName');
   var pokemonImageTag = $('<img>').addClass('pokeOpponent').attr('id','pokeImg');
   var pokemonHp = $('<label>').addClass('pokeOpponent').attr('id','pokeHp');
   var pokemonProgressBar = $('<progress>').attr('id','opponentHealth');
 
-  var pokemonOpponentDiv = $('<div>').attr('id','pokemonOpponent').css({"width":"60%","height":"15%"});
+  var textConsole = $('<textarea>').addClass('textarea').css({"width": "80%", "height": "35%"});
+
   var myPokemonDiv = $('<div>').attr('id','myPokemonOut').css({"width":"10%","height":"20%"});
+  var myName = $('<label>').addClass('username').attr('id','username');
+  var myPokemonName = $('<label>').addClass('me').attr('id','myPokemonName');
+  var myPokemonImageTag = $('<img>').addClass('me').attr('id','myPokemon');
+  var myPokemonImageHp = $('<label>').addClass('me').attr('id','myPokemonHp');
   var myPokemonProgressBar = $('<progress>').attr('id','myHealth');
 
   // opponent pokemon is put on div
@@ -77,42 +72,39 @@ var loadGameDiv = function() {
 
   // All Divs put on the body
   (gameDiv).append(pokemonOpponentDiv).append(textConsole).append(myPokemonDiv);
+
   // renders User Options and appends it to the game Div
   loadOptionDiv(gameDiv);
 
   gameDiv.appendTo('body');
-}
+};
 
 var loadOptionDiv = function(gameDiv){
   var optionDiv = $('<div>').attr('id','options').css({"width":"90%","height":"20%",});
-  var attackButton = $('<button>').addClass('option').attr('id', 'attack').text('Attack');
-  var switchButton = $('<button>').addClass('option').attr('id', 'switch').text('PKMN');
-  var itemButton = $('<button>').addClass('option').attr('id', 'item').text('Items');
-  var fleeButton = $('<button>').addClass('option').attr('id', 'flee').text('Flee');
+  var attackButton = $('<button>').addClass('option').attr('id', 'attack').text('Attack').click(loadGameAttack);
+  var switchButton = $('<button>').addClass('option').attr('id', 'switch').text('PKMN').click(loadGameSwitch);
+  var itemButton = $('<button>').addClass('option').attr('id', 'item').text('Items').click(loadItem);
+  var fleeButton = $('<button>').addClass('option').attr('id', 'flee').text('Flee').click(function(){
+    $('div#gameConsole').remove();
+  });
 
   optionDiv.append(attackButton).append(switchButton).append(itemButton).append(fleeButton);
   (optionDiv).appendTo(gameDiv);
 
-  $(optionDiv).on('click','button#attack',loadGameAttack);
-  $(optionDiv).on('click','button#switch',loadGameSwitch);
-  $(optionDiv).on('click','button#item',loadItem);
-  $(optionDiv).on('click','button#flee',function(){
-    $('div#gameConsole').remove();
-  });
-}
+};
 
 var loadGameSwitch = function(){
   var allMyPokemonDiv = $('<div>').attr('id','myPokemonArray');
+
   for (var i =0; i < game.stage[0].pokemons.length; i++){
-    var pokeButton = $('<button>').addClass('pokemonB').attr('id', i).text(game.stage[0].pokemons[i].name.toUpperCase());
+    var pokeButton = $('<button>').addClass('pokemonB').attr('id', i).text(game.stage[0].pokemons[i].name.toUpperCase()).click(gameSwitch);
     (pokeButton).appendTo(allMyPokemonDiv);
   }
-
+  (allMyPokemonDiv).append(goBack);
   $('div#options').replaceWith(allMyPokemonDiv);
   $(allMyPokemonDiv).on('mouseenter','button.pokemonB',makeModalSwitch);
   $(allMyPokemonDiv).on('mouseleave','button.pokemonB',removeModalSwitch);
-  $(allMyPokemonDiv).on('click','button.pokemonB',gameSwitch);
-}
+};
 
 var loadGameAttack = function(){
   var myPokemonAttackDiv = $('<div>').attr('id','myPokemonAttackArray');
@@ -126,19 +118,19 @@ var loadGameAttack = function(){
   $(myPokemonAttackDiv).on('mouseleave','button.pokemonAttack',removeModalAttack);
   $(myPokemonAttackDiv).on('click','button.pokemonAttack',gameAttack);
 
-}
+};
 
 var gameSwitch = function(){
   game.stage[0].pokeswitch(parseInt(this.id));
   $('div#myPokemonArray').hide();
   loadOptionDiv($('div#gameConsole'));
-}
+};
 
 var gameAttack = function(){
   game.attackPhase(this.id);
   $('div#myPokemonAttackArray').hide();
   loadOptionDiv($('div#gameConsole'));
-}
+};
 
 var loadItem = function(){
   var ItemDiv = $('<div>').attr('id','items').css({"width":"90%","height":"20%"});
@@ -148,13 +140,13 @@ var loadItem = function(){
 
   $('div#options').replaceWith(ItemDiv);
   $(ItemDiv).on('click','button#catchPokemon',gameCatch);
-}
+};
 
 var gameCatch = function(){
   game.stage[0].catch();
   $('div#items').hide();
   loadOptionDiv($('div#gameConsole'));
-}
+};
 
 var makeModalAttack = function(){
   var modal = $('<div>').attr('id','modal');
@@ -187,4 +179,9 @@ var makeModalSwitch = function(){
 
 var removeModalSwitch = function(){
   $('div#modal').hide();
+};
+
+var undo = function(){
+  console.log("moo");
+  // this.parent.replaceWith($('div#options'));
 };

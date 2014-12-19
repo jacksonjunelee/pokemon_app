@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218052829) do
+ActiveRecord::Schema.define(version: 20141218234936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20141218052829) do
     t.string   "nickname"
     t.integer  "api_ref"
     t.integer  "hp"
-    t.text     "url_ref"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -34,7 +33,6 @@ ActiveRecord::Schema.define(version: 20141218052829) do
     t.string   "moves1"
     t.string   "moves2"
     t.string   "moves3"
-    t.text     "battle_img"
     t.integer  "speed"
     t.integer  "position"
     t.integer  "max_hp"
