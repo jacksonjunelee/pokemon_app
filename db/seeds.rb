@@ -31,6 +31,5 @@ nickname: "CHARSWAG",
 api_ref: 5,
 trainer_id: 1,
 hp: 58,
-faint: false,
-battle_img: '/assets/pokemon-main-sprites/yellow/back/5.png'
+faint: false
 )
