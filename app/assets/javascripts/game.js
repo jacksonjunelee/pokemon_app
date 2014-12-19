@@ -16,7 +16,7 @@ var game = {
                 for (var i =0; i < 4; i++){
                   var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
                   var move = random.resource_uri;
-                  $.get('http://www.pokeapi.co' + move).done(function(move_data){
+                  $.get('//www.pokeapi.co' + move).done(function(move_data){
                     game.pokemonOutMoves.push(move_data);
                   });
                 }
@@ -72,7 +72,7 @@ var game = {
   enemyAttack: function(){
     var random = this.stage[1].moves[Math.floor(Math.random()*this.stage[1].moves.length)];
     var myPoke = this;
-    $.get('http://www.pokeapi.co' + random.resource_uri).done(function(data){
+    $.get('//www.pokeapi.co' + random.resource_uri).done(function(data){
       myPoke.pokemonOut.hp -= Math.round(data.power/3);
       myPoke.hpRender();
       $('.textarea').append("\nEnemy pokemon attacks").animate({scrollTop: 600});

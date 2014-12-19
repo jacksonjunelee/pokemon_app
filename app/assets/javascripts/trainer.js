@@ -22,7 +22,7 @@ Me.prototype.pokeswitch = function(index){
     for (var i =0; i < 4; i++){
       var random = data[0].moves[Math.floor(Math.random()*data[0].moves.length)];
       var move = random.resource_uri;
-      $.get('http://www.pokeapi.co' + move).done(function(move_data){
+      $.get('//www.pokeapi.co' + move).done(function(move_data){
         game.pokemonOutMoves.push(move_data);
       });
     }
